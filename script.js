@@ -12,10 +12,20 @@ const saveStatus = document.getElementById("saveStatus");
 const copyBtn = document.getElementById("copyBtn");
 const openBtn = document.getElementById("openBtn");
 const resetBtn = document.getElementById("resetBtn");
+const toast = document.getElementById("toast");
 
 const DEFAULT_RESULT_TEXT = "Hasil url akan muncul disini";
 
-// RENDER KARTU DENGAN STRUKTUR TOMBOL BERLAAPIS
+// TOAST NOTIFICATION FUNCTION
+function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2500);
+}
+
+// RENDER KARTU DENGAN BADGE
 function renderTemplates(data) {
     templateGrid.innerHTML = "";
     
@@ -29,9 +39,11 @@ function renderTemplates(data) {
     data.forEach(item => {
         const orderMessage = encodeURIComponent(`Halo Admin Lapak Digital Deza, saya berminat untuk memesan tema undangan "${item.title}" (${item.price}). Mohon informasi selanjutnya.`);
         const waLink = `https://wa.me/${ADMIN_WA}?text=${orderMessage}`;
+        const badgeHTML = item.badge ? `<span class="card-badge">${item.badge}</span>` : '';
 
         const cardHTML = `
             <div class="card" data-category="${item.category}">
+                ${badgeHTML}
                 <div class="card-preview ${item.themeClass}">
                     <div class="phone-mockup">
                         <div class="phone-screen">
@@ -45,7 +57,6 @@ function renderTemplates(data) {
                     <h3>${item.title}</h3>
                     <span class="price-tag">${item.price}</span>
                     
-                    <!-- BARIS 1: PREVIEW & BUAT LINK -->
                     <div class="card-actions-top">
                         <a href="${item.previewUrl}" target="_blank" class="btn-action btn-preview">
                             <i class="fa-solid fa-eye"></i> Preview
@@ -55,7 +66,6 @@ function renderTemplates(data) {
                         </button>
                     </div>
 
-                    <!-- BARIS 2: TOMBOL PESAN (FULL WIDTH) -->
                     <a href="${waLink}" target="_blank" class="btn-action btn-order-full">
                         <i class="fa-brands fa-whatsapp"></i> Pesan Tema Ini
                     </a>
@@ -66,7 +76,7 @@ function renderTemplates(data) {
     });
 }
 
-// Initial Render
+// INITIAL RENDER
 renderTemplates(templates);
 
 // SEARCH & FILTER
@@ -174,10 +184,7 @@ copyBtn.addEventListener("click", function () {
     }
 
     navigator.clipboard.writeText(url).then(() => {
-        copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Tersalin!';
-        setTimeout(() => {
-            copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy Link';
-        }, 1500);
+        showToast("Link berhasil disalin ke clipboard!");
     });
 });
 

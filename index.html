@@ -3,7 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lapak Digital Deza - Katalog Template Undangan</title>
+  
+  <!-- SEO & OPENGRAPH META TAGS -->
+  <title>Lapak Digital Deza - Katalog Undangan Digital</title>
+  <meta name="description" content="Katalog template undangan digital elegan dan praktis. Buat link nama tamu instan di Lapak Digital Deza.">
+  <meta property="og:title" content="Lapak Digital Deza - Katalog Undangan Digital">
+  <meta property="og:description" content="Pilih desain favoritmu, pesan via WA, dan buat link tamu undangan dengan cepat.">
+  <meta property="og:url" content="https://lapakdigitaldeza.vercel.app">
+  <meta property="og:type" content="website">
+
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -18,7 +26,8 @@
     <nav class="nav-links">
       <a href="#" class="active">Katalog</a>
       <a href="#kategori">Kategori</a>
-      <a href="#katalog">Cari Template</a>
+      <a href="#faq">FAQ</a>
+      <a href="#testimoni">Testimoni</a>
     </nav>
     <a href="https://wa.me/6283180009427?text=Halo%20Admin%20Lapak%20Digital%20Deza,%20saya%20ingin%20tanya-tanya%20mengenai%20undangan%20digital." target="_blank" class="btn-contact">
       <i class="fa-brands fa-whatsapp"></i> Chat Admin
@@ -63,6 +72,84 @@
     </div>
 
   </main>
+
+  <!-- SEKSI TESTIMONI -->
+  <section class="reviews-section" id="testimoni">
+    <div class="section-title">
+      <p class="subtitle">Kata Mereka</p>
+      <h2>Testimoni Pelanggan</h2>
+      <p class="section-desc">Pengalaman nyata dari pasangan yang mempercayakan momen bahagianya pada Lapak Digital Deza.</p>
+    </div>
+
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <p class="review-text">"Proses buat link tamu cepat banget! Hasil kodenya rapi dan pas dibagikan di WA gambarnya langsung muncul. Sangat membantu!"</p>
+        <div class="review-user">
+          <div class="user-avatar">L&D</div>
+          <div class="user-info">
+            <h4>Lara & Deza</h4>
+            <span>Tema: SoftRed Premium</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <p class="review-text">"Suka banget sama tema etnik dark-nya! Adminnya ramah dan fast respon waktu minta tolong revisi teks."</p>
+        <div class="review-user">
+          <div class="user-avatar">E&A</div>
+          <div class="user-info">
+            <h4>Eka & Arian</h4>
+            <span>Tema: Etnik Dark Java</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <p class="review-text">"Harganya terjangkau tapi kualitas tampilannya kayak website mahal. Generatenya instan, gak sampai 1 menit beres."</p>
+        <div class="review-user">
+          <div class="user-avatar">P&R</div>
+          <div class="user-info">
+            <h4>Putri & Rama</h4>
+            <span>Tema: Gold Floral</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEKSI FAQ -->
+  <section class="faq-section" id="faq">
+    <div class="section-title">
+      <p class="subtitle">Bantuan</p>
+      <h2>Pertanyaan Umum (FAQ)</h2>
+    </div>
+
+    <div class="faq-container">
+      <details class="faq-item">
+        <summary>Berapa lama proses pembuatan undangan digital?</summary>
+        <p>Proses pengerjaan cepat sekitar 1x24 jam setelah data diri dan foto diisi dengan lengkap.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Apakah saya bisa membuat link nama tamu tanpa batas?</summary>
+        <p>Ya! Menggunakan fitur Generator di website ini, Anda bisa membuat nama tamu sepuasnya tanpa batasan jumlah.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Apakah musik dan teks bisa disesuaikan?</summary>
+        <p>Tentu, Anda bisa meminta perubahan musik latar, foto, serta detail acara sesuai keinginan saat melakukan pemesanan.</p>
+      </details>
+    </div>
+  </section>
 
   <!-- MODAL GENERATOR LINK TAMU -->
   <div class="modal-overlay" id="generatorModal">
@@ -112,11 +199,13 @@
     </div>
   </div>
 
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast">Link berhasil disalin!</div>
+
   <footer class="site-footer">
     <p>&copy; 2026 Lapak Digital Deza. All rights reserved.</p>
   </footer>
 
-  <!-- SCRIPT MODULAR -->
   <script src="templates.js"></script>
   <script src="script.js"></script>
 </body>

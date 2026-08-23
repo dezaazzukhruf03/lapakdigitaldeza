@@ -15,6 +15,10 @@
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--bg-color);
   color: var(--text-dark);
@@ -162,10 +166,26 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
   border: 1px solid var(--border-color);
   transition: transform 0.2s;
+  position: relative;
 }
 
 .card:hover {
   transform: translateY(-5px);
+}
+
+/* BADGE STATUS */
+.card-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #ef4444;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
 /* MOCKUP HP CSS MURNI */
@@ -214,7 +234,7 @@ body {
 .phone-screen h4 { font-size: 11px; color: #333; }
 .phone-screen p { font-size: 8px; color: #666; margin-top: 4px; }
 
-/* CARD BODY & LAYOUT TOMBOL BARU */
+/* CARD BODY & BUTTONS */
 .card-info {
   padding: 18px;
 }
@@ -231,7 +251,6 @@ body {
   margin-bottom: 15px;
 }
 
-/* BARIS 1: PREVIEW & BUAT LINK */
 .card-actions-top {
   display: flex;
   gap: 8px;
@@ -265,7 +284,6 @@ body {
   color: white;
 }
 
-/* BARIS 2: TOMBOL PESAN (FULL WIDTH) */
 .btn-order-full {
   width: 100%;
   background: #25d366;
@@ -277,6 +295,124 @@ body {
   padding: 50px;
   color: var(--text-muted);
   font-size: 1.2rem;
+}
+
+/* TESTIMONI */
+.reviews-section {
+  max-width: 1100px;
+  margin: 60px auto 40px auto;
+  padding: 0 20px;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.section-title h2 {
+  font-size: 1.8rem;
+  color: var(--text-dark);
+  margin-top: 4px;
+}
+
+.section-desc {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: 6px;
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.review-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.review-stars {
+  color: #f59e0b;
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+}
+
+.review-text {
+  font-size: 0.9rem;
+  color: #334155;
+  line-height: 1.5;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+.review-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.user-info h4 {
+  font-size: 0.9rem;
+  color: var(--text-dark);
+}
+
+.user-info span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* FAQ SECTION */
+.faq-section {
+  max-width: 800px;
+  margin: 40px auto 80px auto;
+  padding: 0 20px;
+}
+
+.faq-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-item {
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px 20px;
+  cursor: pointer;
+}
+
+.faq-item summary {
+  font-weight: 600;
+  color: var(--text-dark);
+  outline: none;
+}
+
+.faq-item p {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
 }
 
 /* MODAL / POPUP */
@@ -357,7 +493,6 @@ body {
   cursor: pointer;
 }
 
-/* RESULT SECTION INSIDE MODAL */
 .result-box {
   margin-top: 20px;
   padding-top: 15px;
@@ -408,6 +543,26 @@ body {
   color: #ef4444;
   font-size: 0.8rem;
   cursor: pointer;
+}
+
+/* TOAST NOTIFICATION */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #1e293b;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+  z-index: 2000;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
 }
 
 .site-footer {
