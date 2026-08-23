@@ -12,6 +12,7 @@
   <meta property="og:url" content="https://lapakdigitaldeza.vercel.app">
   <meta property="og:type" content="website">
 
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -23,15 +24,21 @@
       <i class="fa-solid fa-paper-plane"></i>
       <span>Lapak Digital Deza</span>
     </div>
-    <nav class="nav-links">
+    <nav class="nav-links" id="navLinks">
       <a href="#" class="active">Katalog</a>
       <a href="#kategori">Kategori</a>
       <a href="#faq">FAQ</a>
       <a href="#testimoni">Testimoni</a>
+      <a href="https://wa.me/6283180009427?text=Halo%20Admin%20Lapak%20Digital%20Deza,%20saya%20ingin%20tanya-tanya%20mengenai%20undangan%20digital." target="_blank" class="btn-contact btn-contact-mobile">
+        <i class="fa-brands fa-whatsapp"></i> Chat Admin
+      </a>
     </nav>
-    <a href="https://wa.me/6283180009427?text=Halo%20Admin%20Lapak%20Digital%20Deza,%20saya%20ingin%20tanya-tanya%20mengenai%20undangan%20digital." target="_blank" class="btn-contact">
+    <a href="https://wa.me/6283180009427?text=Halo%20Admin%20Lapak%20Digital%20Deza,%20saya%20ingin%20tanya-tanya%20mengenai%20undangan%20digital." target="_blank" class="btn-contact btn-contact-desktop">
       <i class="fa-brands fa-whatsapp"></i> Chat Admin
     </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Buka menu" aria-expanded="false">
+      <i class="fa-solid fa-bars"></i>
+    </button>
   </header>
 
   <!-- HERO SECTION & SEARCH -->
@@ -47,21 +54,8 @@
 
   <main class="main-container" id="katalog">
 
-    <!-- FILTER KATEGORI -->
-    <div class="category-bar" id="kategori">
-      <button class="cat-btn active" data-category="all">
-        <i class="fa-solid fa-border-all"></i> Semua
-      </button>
-      <button class="cat-btn" data-category="pernikahan">
-        <i class="fa-solid fa-heart"></i> Pernikahan
-      </button>
-      <button class="cat-btn" data-category="khitanan">
-        <i class="fa-solid fa-child"></i> Khitanan
-      </button>
-      <button class="cat-btn" data-category="ulangtahun">
-        <i class="fa-solid fa-cake-candles"></i> Ulang Tahun
-      </button>
-    </div>
+    <!-- FILTER KATEGORI (dirender otomatis oleh script.js berdasarkan data templates) -->
+    <div class="category-bar" id="kategori"></div>
 
     <!-- GRID TEMPLATE -->
     <div class="template-grid" id="templateGrid"></div>
@@ -153,18 +147,25 @@
 
   <!-- MODAL GENERATOR LINK TAMU -->
   <div class="modal-overlay" id="generatorModal">
-    <div class="modal-box">
-      <button class="modal-close" onclick="closeGenerator()">&times;</button>
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="generatorTitle">
+      <button class="modal-close" onclick="closeGenerator()" aria-label="Tutup">&times;</button>
       
       <div class="modal-header">
         <p class="subtitle">Lapak Digital Deza</p>
-        <h2>Generator Undangan</h2>
+        <h2 id="generatorTitle">Generator Undangan</h2>
       </div>
 
       <form id="generatorForm">
+        <!-- Honeypot anti-bot: kolom ini disembunyikan dari manusia lewat CSS,
+             tapi bot form-filler biasanya tetap mengisinya -->
+        <div class="hp-field" aria-hidden="true">
+          <label for="hp_field">Jangan diisi</label>
+          <input type="text" id="hp_field" name="hp_field" tabindex="-1" autocomplete="off">
+        </div>
+
         <div class="form-group">
           <label for="guestName">Nama Tamu</label>
-          <input type="text" id="guestName" placeholder="Masukkan Nama Tamu" required>
+          <input type="text" id="guestName" placeholder="Masukkan Nama Tamu" required maxlength="60">
         </div>
 
         <div class="form-group">
@@ -200,7 +201,7 @@
   </div>
 
   <!-- TOAST NOTIFICATION -->
-  <div class="toast" id="toast">Link berhasil disalin!</div>
+  <div class="toast" id="toast" role="status" aria-live="polite">Link berhasil disalin!</div>
 
   <footer class="site-footer">
     <p>&copy; 2026 Lapak Digital Deza. All rights reserved.</p>

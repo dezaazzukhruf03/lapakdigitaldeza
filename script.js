@@ -1,5 +1,15 @@
+// ICON UNTUK SETIAP KATEGORI (tambahkan di sini kalau ada kategori baru di templates.js)
+const CATEGORY_META = {
+    all: { label: "Semua", icon: "fa-solid fa-border-all" },
+    pernikahan: { label: "Pernikahan", icon: "fa-solid fa-heart" },
+    khitanan: { label: "Khitanan", icon: "fa-solid fa-child" },
+    ulangtahun: { label: "Ulang Tahun", icon: "fa-solid fa-cake-candles" }
+};
+const DEFAULT_CATEGORY_META = { icon: "fa-solid fa-tag" };
+
 // DOM ELEMENTS
 const templateGrid = document.getElementById("templateGrid");
+const categoryBar = document.getElementById("kategori");
 const noResults = document.getElementById("noResults");
 const searchInput = document.getElementById("searchInput");
 const modal = document.getElementById("generatorModal");
@@ -15,6 +25,23 @@ const resetBtn = document.getElementById("resetBtn");
 const toast = document.getElementById("toast");
 
 const DEFAULT_RESULT_TEXT = "Hasil url akan muncul disini";
+
+// NAVBAR MOBILE TOGGLE
+const navToggle = document.getElementById("navToggle");
+const navLinks = document.getElementById("navLinks");
+
+navToggle.addEventListener("click", () => {
+    const isOpen = navLinks.classList.toggle("open");
+    navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+});
+
+// Tutup menu mobile setelah klik salah satu link
+navLinks.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        navToggle.setAttribute("aria-expanded", "false");
+    });
+});
 
 // TOAST NOTIFICATION FUNCTION
 function showToast(message) {
@@ -76,7 +103,33 @@ function renderTemplates(data) {
     });
 }
 
+// RENDER TOMBOL KATEGORI (hanya kategori yang benar-benar punya template)
+function renderCategoryBar() {
+    const usedCategories = [...new Set(templates.map(t => t.category))];
+    const categoriesToShow = ["all", ...usedCategories];
+
+    categoryBar.innerHTML = "";
+    categoriesToShow.forEach(cat => {
+        const meta = CATEGORY_META[cat] || {
+            label: cat.charAt(0).toUpperCase() + cat.slice(1),
+            icon: DEFAULT_CATEGORY_META.icon
+        };
+        const btn = document.createElement("button");
+        btn.className = "cat-btn" + (cat === "all" ? " active" : "");
+        btn.setAttribute("data-category", cat);
+        btn.innerHTML = `<i class="${meta.icon}"></i> ${meta.label}`;
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentCategory = cat;
+            filterData();
+        });
+        categoryBar.appendChild(btn);
+    });
+}
+
 // INITIAL RENDER
+renderCategoryBar();
 renderTemplates(templates);
 
 // SEARCH & FILTER
@@ -98,27 +151,30 @@ function filterData() {
 
 searchInput.addEventListener("input", filterData);
 
-document.querySelectorAll(".cat-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-        document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        currentCategory = btn.getAttribute("data-category");
-        filterData();
-    });
-});
-
 // LOGIKA MODAL GENERATOR
 function openGenerator(themeId) {
+    const selected = templates.find(t => t.id === themeId);
+    if (!selected) return;
+
+    // Select dikunci (disabled) ke template yang diklik dari katalog,
+    // jadi cukup tampilkan satu opsi ini saja — tidak perlu render semua template.
     websiteSelect.innerHTML = "";
-    templates.forEach(t => {
-        const opt = document.createElement("option");
-        opt.value = t.id;
-        opt.textContent = t.title;
-        if(t.id === themeId) opt.selected = true;
-        websiteSelect.appendChild(opt);
-    });
+    const opt = document.createElement("option");
+    opt.value = selected.id;
+    opt.textContent = selected.title;
+    opt.selected = true;
+    websiteSelect.appendChild(opt);
+
+    // Reset form tiap kali modal dibuka untuk template baru
+    guestName.value = "";
+    resultUrl.textContent = DEFAULT_RESULT_TEXT;
+    saveStatus.textContent = "";
+    saveStatus.className = "save-status";
+    generateBtn.disabled = false;
+    generateBtn.textContent = "Generate Link";
 
     modal.style.display = "flex";
+    guestName.focus();
 }
 
 function closeGenerator() {
@@ -129,13 +185,49 @@ window.onclick = function(event) {
     if (event.target === modal) closeGenerator();
 };
 
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape" && modal.style.display === "flex") {
+        closeGenerator();
+    }
+});
+
+// ANTI-SPAM: batasi jarak antar submit (mencegah klik berulang / bot sederhana)
+const SUBMIT_COOLDOWN_MS = 8000;
+let lastSubmitAt = 0;
+
 // SUBMIT FORM GENERATOR
 generatorForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const name = guestName.value.trim();
+    // Honeypot: field tersembunyi yang hanya akan terisi oleh bot otomatis
+    const honeypot = document.getElementById("hp_field");
+    if (honeypot && honeypot.value.trim() !== "") {
+        // Diam-diam abaikan submit dari bot, jangan kasih tahu bahwa ini terdeteksi
+        return;
+    }
+
+    const now = Date.now();
+    if (now - lastSubmitAt < SUBMIT_COOLDOWN_MS) {
+        alert("Mohon tunggu beberapa detik sebelum generate link lagi.");
+        return;
+    }
+
+    let name = guestName.value.trim();
+
+    // Validasi panjang & bersihkan karakter yang tidak wajar untuk nama tamu
     if (name === "") {
         alert("Silakan masukkan nama tamu.");
+        guestName.focus();
+        return;
+    }
+    if (name.length > 60) {
+        alert("Nama tamu terlalu panjang (maksimal 60 karakter).");
+        guestName.focus();
+        return;
+    }
+    // Hanya izinkan huruf, spasi, dan tanda baca umum pada nama (&, ., ', -)
+    if (!/^[\p{L}\s.,'&-]+$/u.test(name)) {
+        alert("Nama tamu mengandung karakter yang tidak didukung.");
         guestName.focus();
         return;
     }
@@ -150,13 +242,16 @@ generatorForm.addEventListener("submit", function (e) {
     const finalUrl = `${selectedTemplate.baseUrl}?to=${encodedName}`;
 
     resultUrl.textContent = finalUrl;
+    lastSubmitAt = now;
 
     generateBtn.disabled = true;
     generateBtn.textContent = "Berhasil!";
-    saveStatus.textContent = "Menyimpan ke Sheet...";
+    saveStatus.textContent = "Menyimpan ke database...";
+    saveStatus.className = "save-status";
 
     fetch(API_URL, {
         method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify({
             nama: name,
             website: websiteSelect.value,
@@ -164,10 +259,15 @@ generatorForm.addEventListener("submit", function (e) {
         })
     })
     .then(() => {
-        saveStatus.textContent = "Data tersimpan di Sheet!";
+        // Catatan: banyak deployment Google Apps Script tidak mengirim header CORS,
+        // sehingga browser tidak selalu bisa membaca isi response walau request sukses.
+        // Karena itu kita tidak mengklaim "100% tersimpan", cukup beri tahu bahwa
+        // request sudah terkirim — dan link tetap bisa langsung dipakai.
+        saveStatus.textContent = "Link siap digunakan. Data sedang disinkronkan ke database.";
     })
     .catch(() => {
-        saveStatus.textContent = "Gagal simpan ke Sheet, tapi URL siap digunakan.";
+        saveStatus.textContent = "Gagal terhubung ke database, tapi URL tetap siap digunakan.";
+        saveStatus.classList.add("save-status-error");
     })
     .finally(() => {
         generateBtn.disabled = false;

@@ -69,6 +69,56 @@ body {
   border-radius: 20px;
   font-weight: 600;
   font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.btn-contact-mobile {
+  display: none;
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  color: var(--text-dark);
+  cursor: pointer;
+  padding: 6px;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    flex-direction: column;
+    padding: 15px 5%;
+    gap: 14px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .btn-contact-desktop {
+    display: none;
+  }
+
+  .btn-contact-mobile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: fit-content;
+  }
+
+  .nav-toggle {
+    display: inline-block;
+  }
 }
 
 /* HERO & SEARCH */
@@ -517,6 +567,19 @@ body {
   font-size: 12px;
   color: #16a34a;
   margin-bottom: 8px;
+}
+
+.save-status.save-status-error {
+  color: #dc2626;
+}
+
+/* Honeypot: tersembunyi dari manusia, tetap ada di DOM untuk bot */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  height: 0;
+  overflow: hidden;
 }
 
 .action-buttons {
