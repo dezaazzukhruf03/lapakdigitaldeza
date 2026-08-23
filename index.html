@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lapak Digital Deza - Katalog Template Undangan</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- HEADER / NAVBAR -->
+  <header class="navbar">
+    <div class="logo-brand">
+      <i class="fa-solid fa-paper-plane"></i>
+      <span>Lapak Digital Deza</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#" class="active">Katalog Template</a>
+      <a href="#kategori">Kategori</a>
+      <a href="#faq">Cara Kerja</a>
+    </nav>
+    <button class="btn-contact" onclick="alert('Hubungi admin via WhatsApp!')">
+      <i class="fa-brands fa-whatsapp"></i> Bantuan
+    </button>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <h1>Katalog Template Undangan Digital</h1>
+    <p>Pilih desain terbaik untuk momen istimewa Anda dan buat link undangan tamu dengan mudah & cepat.</p>
+  </section>
+
+  <main class="main-container">
+
+    <!-- FILTER KATEGORI BAR -->
+    <div class="category-bar" id="kategori">
+      <button class="cat-btn active" data-category="all">
+        <i class="fa-solid fa-border-all"></i> Semua Tema
+      </button>
+
+      <button class="cat-btn" data-category="pernikahan">
+        <i class="fa-solid fa-heart"></i> Pernikahan
+      </button>
+
+      <button class="cat-btn" data-category="khitanan">
+        <i class="fa-solid fa-child"></i> Khitanan
+      </button>
+
+      <button class="cat-btn" data-category="ulangtahun">
+        <i class="fa-solid fa-cake-candles"></i> Ulang Tahun
+      </button>
+    </div>
+
+    <!-- GRID DENGAN DUMMY PREVIEW SCRIPT/CSS -->
+    <div class="template-grid">
+
+      <!-- CARD 1 -->
+      <div class="card" data-category="pernikahan">
+        <div class="card-preview theme-softred">
+          <div class="phone-mockup">
+            <div class="phone-screen">
+              <span class="mock-tag">Soft Red</span>
+              <h4>Lara & Deza</h4>
+              <p>24 OKTOBER 2026</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-info">
+          <h3>Soft Red Premium</h3>
+          <span class="price-tag">Rp 39.000</span>
+          <div class="card-actions">
+            <a href="https://ldd-softred001.vercel.app/" target="_blank" class="btn-action btn-preview">
+              <i class="fa-solid fa-eye"></i> Preview
+            </a>
+            <button class="btn-action btn-use" onclick="openGenerator('softred001', 'Sampel LDD SoftRed 001')">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> Buat Link
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="card" data-category="pernikahan">
+        <div class="card-preview theme-darkjava">
+          <div class="phone-mockup">
+            <div class="phone-screen">
+              <span class="mock-tag">Etnik Java</span>
+              <h4>Eka & Arian</h4>
+              <p>04 SEPTEMBER 2026</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-info">
+          <h3>Eka & Arian (Etnik Dark)</h3>
+          <span class="price-tag">Rp 39.000</span>
+          <div class="card-actions">
+            <a href="https://ekaarian-wedding.vercel.app/" target="_blank" class="btn-action btn-preview">
+              <i class="fa-solid fa-eye"></i> Preview
+            </a>
+            <button class="btn-action btn-use" onclick="openGenerator('ekaarian', 'Eka & Arian')">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> Buat Link
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="card" data-category="pernikahan">
+        <div class="card-preview theme-gold">
+          <div class="phone-mockup">
+            <div class="phone-screen">
+              <span class="mock-tag">Lux Gold</span>
+              <h4>Putri & Rama</h4>
+              <p>23 AGUSTUS 2026</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-info">
+          <h3>Putri & Rama (Gold Floral)</h3>
+          <span class="price-tag">Rp 39.000</span>
+          <div class="card-actions">
+            <a href="https://putrirama-wedding.vercel.app/" target="_blank" class="btn-action btn-preview">
+              <i class="fa-solid fa-eye"></i> Preview
+            </a>
+            <button class="btn-action btn-use" onclick="openGenerator('putrirama', 'Putri & Rama')">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> Buat Link
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- MODAL / POPUP GENERATOR SAMA SEPERTI FORM LAMA KAMU -->
+  <div class="modal-overlay" id="generatorModal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeGenerator()">&times;</button>
+      
+      <div class="modal-header">
+        <p class="subtitle">Lapak Digital Deza</p>
+        <h2>Generator Undangan</h2>
+      </div>
+
+      <form id="generatorForm">
+        <div class="form-group">
+          <label for="guestName">Nama Tamu</label>
+          <input type="text" id="guestName" placeholder="Masukkan Nama Tamu" required>
+        </div>
+
+        <div class="form-group">
+          <label for="websiteSelect">Website Dihubungkan</label>
+          <select id="websiteSelect" disabled>
+            <option value="softred001">Sampel LDD SoftRed 001</option>
+            <option value="ekaarian">Eka & Arian (04 September 2026)</option>
+            <option value="putrirama">Putri & Rama (23 Agustus 2026)</option>
+          </select>
+        </div>
+
+        <button type="submit" id="generateBtn" class="btn-primary">
+          Generate Link
+        </button>
+      </form>
+
+      <div class="result-box">
+        <h3>Hasil URL:</h3>
+        <p id="resultUrl">Hasil url akan muncul disini</p>
+        <p id="saveStatus" class="save-status"></p>
+
+        <div class="action-buttons">
+          <button type="button" id="copyBtn" class="btn-secondary">
+            <i class="fa-regular fa-copy"></i> Copy Link
+          </button>
+          <button type="button" id="openBtn" class="btn-secondary">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Link
+          </button>
+        </div>
+
+        <button type="button" id="resetBtn" class="btn-reset">
+          Reset Input
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Lapak Digital Deza. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
