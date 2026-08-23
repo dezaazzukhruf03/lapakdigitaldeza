@@ -1,7 +1,7 @@
-// CONFIGURATION & API
-const API_URL = "https://script.google.com/macros/s/AKfycbzxGY9MJef2If5Je1L6nW0EEdRCL72nEM7Vdy1EpzY8uLoCWB6rfzdiZiGvNIx2Rm8lyQ/exec";
-
 // DOM ELEMENTS
+const templateGrid = document.getElementById("templateGrid");
+const noResults = document.getElementById("noResults");
+const searchInput = document.getElementById("searchInput");
 const modal = document.getElementById("generatorModal");
 const generatorForm = document.getElementById("generatorForm");
 const guestName = document.getElementById("guestName");
@@ -15,9 +15,99 @@ const resetBtn = document.getElementById("resetBtn");
 
 const DEFAULT_RESULT_TEXT = "Hasil url akan muncul disini";
 
-// 1. MODAL GENERATOR LOGIC
-function openGenerator(themeValue, themeName) {
-    websiteSelect.value = themeValue;
+// RENDER KARTU DENGAN STRUKTUR TOMBOL BERLAAPIS
+function renderTemplates(data) {
+    templateGrid.innerHTML = "";
+    
+    if (data.length === 0) {
+        noResults.style.display = "block";
+        return;
+    } else {
+        noResults.style.display = "none";
+    }
+
+    data.forEach(item => {
+        const orderMessage = encodeURIComponent(`Halo Admin Lapak Digital Deza, saya berminat untuk memesan tema undangan "${item.title}" (${item.price}). Mohon informasi selanjutnya.`);
+        const waLink = `https://wa.me/${ADMIN_WA}?text=${orderMessage}`;
+
+        const cardHTML = `
+            <div class="card" data-category="${item.category}">
+                <div class="card-preview ${item.themeClass}">
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <span class="mock-tag">${item.tag}</span>
+                            <h4>${item.sampleNames}</h4>
+                            <p>${item.sampleDate}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <h3>${item.title}</h3>
+                    <span class="price-tag">${item.price}</span>
+                    
+                    <!-- BARIS 1: PREVIEW & BUAT LINK -->
+                    <div class="card-actions-top">
+                        <a href="${item.previewUrl}" target="_blank" class="btn-action btn-preview">
+                            <i class="fa-solid fa-eye"></i> Preview
+                        </a>
+                        <button class="btn-action btn-use" onclick="openGenerator('${item.id}')">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Buat Link
+                        </button>
+                    </div>
+
+                    <!-- BARIS 2: TOMBOL PESAN (FULL WIDTH) -->
+                    <a href="${waLink}" target="_blank" class="btn-action btn-order-full">
+                        <i class="fa-brands fa-whatsapp"></i> Pesan Tema Ini
+                    </a>
+                </div>
+            </div>
+        `;
+        templateGrid.insertAdjacentHTML("beforeend", cardHTML);
+    });
+}
+
+// Initial Render
+renderTemplates(templates);
+
+// SEARCH & FILTER
+let currentCategory = "all";
+
+function filterData() {
+    const searchTerm = searchInput.value.toLowerCase().trim();
+    
+    const filtered = templates.filter(item => {
+        const matchCategory = (currentCategory === "all") || (item.category === currentCategory);
+        const matchSearch = item.title.toLowerCase().includes(searchTerm) || 
+                            item.tag.toLowerCase().includes(searchTerm) ||
+                            item.sampleNames.toLowerCase().includes(searchTerm);
+        return matchCategory && matchSearch;
+    });
+
+    renderTemplates(filtered);
+}
+
+searchInput.addEventListener("input", filterData);
+
+document.querySelectorAll(".cat-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentCategory = btn.getAttribute("data-category");
+        filterData();
+    });
+});
+
+// LOGIKA MODAL GENERATOR
+function openGenerator(themeId) {
+    websiteSelect.innerHTML = "";
+    templates.forEach(t => {
+        const opt = document.createElement("option");
+        opt.value = t.id;
+        opt.textContent = t.title;
+        if(t.id === themeId) opt.selected = true;
+        websiteSelect.appendChild(opt);
+    });
+
     modal.style.display = "flex";
 }
 
@@ -25,74 +115,35 @@ function closeGenerator() {
     modal.style.display = "none";
 }
 
-// Close Modal when clicking outside box
 window.onclick = function(event) {
-    if (event.target === modal) {
-        closeGenerator();
-    }
-}
+    if (event.target === modal) closeGenerator();
+};
 
-// 2. CATEGORY FILTER LOGIC
-const categoryButtons = document.querySelectorAll(".cat-btn");
-const cards = document.querySelectorAll(".card");
-
-categoryButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-        categoryButtons.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-
-        const selectedCat = btn.getAttribute("data-category");
-
-        cards.forEach(card => {
-            if (selectedCat === "all" || card.getAttribute("data-category") === selectedCat) {
-                card.style.display = "block";
-            } else {
-                card.style.display = "none";
-            }
-        });
-    });
-});
-
-// 3. GENERATOR LOGIC (FUNGSI DARI KODE ASLI KAMU)
+// SUBMIT FORM GENERATOR
 generatorForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     const name = guestName.value.trim();
-
     if (name === "") {
         alert("Silakan masukkan nama tamu.");
         guestName.focus();
         return;
     }
 
-    let baseUrl = "";
-
-    switch (websiteSelect.value) {
-        case "ekaarian":
-            baseUrl = "https://ekaarian-wedding.vercel.app/";
-            break;
-
-        case "putrirama":
-            baseUrl = "https://putrirama-wedding.vercel.app/";
-            break;
-
-        case "softred001":
-            baseUrl = "https://ldd-softred001.vercel.app/";
-            break;
-
-        default:
-            alert("Website tidak ditemukan.");
-            return;
+    const selectedTemplate = templates.find(t => t.id === websiteSelect.value);
+    if (!selectedTemplate) {
+        alert("Website tidak ditemukan.");
+        return;
     }
 
     const encodedName = encodeURIComponent(name);
-    const finalUrl = `${baseUrl}?to=${encodedName}`;
+    const finalUrl = `${selectedTemplate.baseUrl}?to=${encodedName}`;
 
     resultUrl.textContent = finalUrl;
 
     generateBtn.disabled = true;
     generateBtn.textContent = "Berhasil!";
-    saveStatus.textContent = "Menyimpan ke data...";
+    saveStatus.textContent = "Menyimpan ke Sheet...";
 
     fetch(API_URL, {
         method: "POST",
@@ -103,10 +154,10 @@ generatorForm.addEventListener("submit", function (e) {
         })
     })
     .then(() => {
-        saveStatus.textContent = "Data tersimpan!";
+        saveStatus.textContent = "Data tersimpan di Sheet!";
     })
     .catch(() => {
-        saveStatus.textContent = "Gagal menyimpan ke Sheet, namun URL tetap dapat digunakan.";
+        saveStatus.textContent = "Gagal simpan ke Sheet, tapi URL siap digunakan.";
     })
     .finally(() => {
         generateBtn.disabled = false;
@@ -114,10 +165,9 @@ generatorForm.addEventListener("submit", function (e) {
     });
 });
 
-// 4. ACTION BUTTONS
+// COPY, OPEN, RESET
 copyBtn.addEventListener("click", function () {
     const url = resultUrl.textContent.trim();
-
     if (url === DEFAULT_RESULT_TEXT) {
         alert("Silakan generate URL terlebih dahulu.");
         return;
@@ -133,12 +183,10 @@ copyBtn.addEventListener("click", function () {
 
 openBtn.addEventListener("click", function () {
     const url = resultUrl.textContent.trim();
-
     if (url === DEFAULT_RESULT_TEXT) {
         alert("Silakan generate URL terlebih dahulu.");
         return;
     }
-
     window.open(url, "_blank");
 });
 
