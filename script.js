@@ -43,6 +43,16 @@ navLinks.querySelectorAll("a").forEach(link => {
     });
 });
 
+// GOOGLE ANALYTICS 4 EVENT HELPER
+function trackTemplateEvent(eventName, templateId, templateTitle) {
+    if (typeof gtag === "function") {
+        gtag('event', eventName, {
+            template_id: templateId,
+            template_title: templateTitle
+        });
+    }
+}
+
 // TOAST NOTIFICATION FUNCTION
 function showToast(message) {
     toast.textContent = message;
@@ -85,17 +95,17 @@ function renderTemplates(data) {
                     <span class="price-tag">${item.price}</span>
                     
                     <div class="card-actions-top">
-                        <a href="${item.previewUrl}" target="_blank" class="btn-action btn-preview">
-                            <i class="fa-solid fa-eye"></i> Preview
-                        </a>
-                        <button class="btn-action btn-use" onclick="openGenerator('${item.id}')">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i> Buat Link
-                        </button>
-                    </div>
-
-                    <a href="${waLink}" target="_blank" class="btn-action btn-order-full">
-                        <i class="fa-brands fa-whatsapp"></i> Pesan Tema Ini
+                    <a href="${item.previewUrl}" target="_blank" class="btn-action btn-preview" onclick="trackTemplateEvent('preview_template', '${item.id}', '${item.title}')">
+                        <i class="fa-solid fa-eye"></i> Preview
                     </a>
+                    <button class="btn-action btn-use" onclick="openGenerator('${item.id}')">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Buat Link
+                    </button>
+                </div>
+
+                <a href="${waLink}" target="_blank" class="btn-action btn-order-full" onclick="trackTemplateEvent('order_template', '${item.id}', '${item.title}')">
+                    <i class="fa-brands fa-whatsapp"></i> Pesan Tema Ini
+                </a>
                 </div>
             </div>
         `;
@@ -243,6 +253,7 @@ generatorForm.addEventListener("submit", function (e) {
 
     resultUrl.textContent = finalUrl;
     lastSubmitAt = now;
+    trackTemplateEvent('generate_link', selectedTemplate.id, selectedTemplate.title);
 
     generateBtn.disabled = true;
     generateBtn.textContent = "Berhasil!";
