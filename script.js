@@ -1,4 +1,4 @@
-// ICON UNTUK SETIAP KATEGORI (tambahkan di sini kalau ada kategori baru di templates.js)
+// ICON UNTUK SETIAP KATEGORI (tambahkan di sini kalau ada kategori baru di tabel templates)
 const CATEGORY_META = {
     all: { label: "Semua", icon: "fa-solid fa-border-all" },
     pernikahan: { label: "Pernikahan", icon: "fa-solid fa-heart" },
@@ -12,36 +12,6 @@ const templateGrid = document.getElementById("templateGrid");
 const categoryBar = document.getElementById("kategori");
 const noResults = document.getElementById("noResults");
 const searchInput = document.getElementById("searchInput");
-const modal = document.getElementById("generatorModal");
-const generatorForm = document.getElementById("generatorForm");
-const guestName = document.getElementById("guestName");
-const websiteSelect = document.getElementById("websiteSelect");
-const generateBtn = document.getElementById("generateBtn");
-const resultUrl = document.getElementById("resultUrl");
-const saveStatus = document.getElementById("saveStatus");
-const copyBtn = document.getElementById("copyBtn");
-const openBtn = document.getElementById("openBtn");
-const resetBtn = document.getElementById("resetBtn");
-const toast = document.getElementById("toast");
-
-const DEFAULT_RESULT_TEXT = "Hasil url akan muncul disini";
-
-// NAVBAR MOBILE TOGGLE
-const navToggle = document.getElementById("navToggle");
-const navLinks = document.getElementById("navLinks");
-
-navToggle.addEventListener("click", () => {
-    const isOpen = navLinks.classList.toggle("open");
-    navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-});
-
-// Tutup menu mobile setelah klik salah satu link
-navLinks.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", () => {
-        navLinks.classList.remove("open");
-        navToggle.setAttribute("aria-expanded", "false");
-    });
-});
 
 // GOOGLE ANALYTICS 4 EVENT HELPER
 function trackTemplateEvent(eventName, templateId, templateTitle) {
@@ -53,19 +23,10 @@ function trackTemplateEvent(eventName, templateId, templateTitle) {
     }
 }
 
-// TOAST NOTIFICATION FUNCTION
-function showToast(message) {
-    toast.textContent = message;
-    toast.classList.add("show");
-    setTimeout(() => {
-        toast.classList.remove("show");
-    }, 2500);
-}
-
 // RENDER KARTU DENGAN BADGE
 function renderTemplates(data) {
     templateGrid.innerHTML = "";
-    
+
     if (data.length === 0) {
         noResults.style.display = "block";
         return;
@@ -74,8 +35,8 @@ function renderTemplates(data) {
     }
 
     data.forEach(item => {
-        const orderMessage = encodeURIComponent(`Halo Admin Lapak Digital Deza, saya berminat untuk memesan tema undangan "${item.title}" (${item.price}). Mohon informasi selanjutnya.`);
-        const waLink = `https://wa.me/${ADMIN_WA}?text=${orderMessage}`;
+        const askAdminMessage = encodeURIComponent(`Halo Admin Lapak Digital Deza, saya ingin tanya-tanya dulu soal tema "${item.title}" (${item.price}) sebelum pesan.`);
+        const waLink = `https://wa.me/${ADMIN_WA}?text=${askAdminMessage}`;
         const badgeHTML = item.badge ? `<span class="card-badge">${item.badge}</span>` : '';
 
         const cardHTML = `
@@ -93,19 +54,19 @@ function renderTemplates(data) {
                 <div class="card-info">
                     <h3>${item.title}</h3>
                     <span class="price-tag">${item.price}</span>
-                    
-                    <div class="card-actions-top">
-                    <a href="${item.previewUrl}" target="_blank" class="btn-action btn-preview" onclick="trackTemplateEvent('preview_template', '${item.id}', '${item.title}')">
-                        <i class="fa-solid fa-eye"></i> Preview
-                    </a>
-                    <button class="btn-action btn-use" onclick="openGenerator('${item.id}')">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i> Buat Link
-                    </button>
-                </div>
 
-                <a href="${waLink}" target="_blank" class="btn-action btn-order-full" onclick="trackTemplateEvent('order_template', '${item.id}', '${item.title}')">
-                    <i class="fa-brands fa-whatsapp"></i> Pesan Tema Ini
-                </a>
+                    <div class="card-actions-top">
+                        <a href="${item.previewUrl}" target="_blank" class="btn-action btn-preview" onclick="trackTemplateEvent('preview_template', '${item.id}', '${item.title}')">
+                            <i class="fa-solid fa-eye"></i> Preview
+                        </a>
+                        <a href="pesan.html?template=${item.id}" class="btn-action btn-use" onclick="trackTemplateEvent('open_order_form', '${item.id}', '${item.title}')">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Pesan Tema Ini
+                        </a>
+                    </div>
+
+                    <a href="${waLink}" target="_blank" class="btn-action btn-order-full" onclick="trackTemplateEvent('ask_admin_click', '${item.id}', '${item.title}')">
+                        <i class="fa-brands fa-whatsapp"></i> Tanya Dulu ke Admin
+                    </a>
                 </div>
             </div>
         `;
@@ -138,11 +99,9 @@ function renderCategoryBar() {
     });
 }
 
-// DATA TEMPLATES — sekarang diambil dari Supabase, bukan hardcode lagi
+// DATA TEMPLATES — diambil dari Supabase
 let templates = [];
 
-// Ambil data katalog dari Supabase, ubah nama kolom (snake_case) jadi
-// bentuk yang dipakai kode di bawah (camelCase), sama seperti sebelumnya
 async function loadTemplates() {
     const { data, error } = await sb.from("templates").select("*").order("created_at");
 
@@ -167,7 +126,7 @@ async function loadTemplates() {
     }));
 }
 
-// INITIAL RENDER (sekarang async karena harus tunggu data dari Supabase)
+// INITIAL RENDER
 async function init() {
     templateGrid.innerHTML = `<p class="loading-text">Memuat katalog...</p>`;
     templates = await loadTemplates();
@@ -181,10 +140,10 @@ let currentCategory = "all";
 
 function filterData() {
     const searchTerm = searchInput.value.toLowerCase().trim();
-    
+
     const filtered = templates.filter(item => {
         const matchCategory = (currentCategory === "all") || (item.category === currentCategory);
-        const matchSearch = item.title.toLowerCase().includes(searchTerm) || 
+        const matchSearch = item.title.toLowerCase().includes(searchTerm) ||
                             item.tag.toLowerCase().includes(searchTerm) ||
                             item.sampleNames.toLowerCase().includes(searchTerm);
         return matchCategory && matchSearch;
@@ -195,153 +154,18 @@ function filterData() {
 
 searchInput.addEventListener("input", filterData);
 
-// LOGIKA MODAL GENERATOR
-function openGenerator(themeId) {
-    const selected = templates.find(t => t.id === themeId);
-    if (!selected) return;
+// NAVBAR MOBILE TOGGLE
+const navToggle = document.getElementById("navToggle");
+const navLinks = document.getElementById("navLinks");
 
-    // Select dikunci (disabled) ke template yang diklik dari katalog,
-    // jadi cukup tampilkan satu opsi ini saja — tidak perlu render semua template.
-    websiteSelect.innerHTML = "";
-    const opt = document.createElement("option");
-    opt.value = selected.id;
-    opt.textContent = selected.title;
-    opt.selected = true;
-    websiteSelect.appendChild(opt);
-
-    // Reset form tiap kali modal dibuka untuk template baru
-    guestName.value = "";
-    resultUrl.textContent = DEFAULT_RESULT_TEXT;
-    saveStatus.textContent = "";
-    saveStatus.className = "save-status";
-    generateBtn.disabled = false;
-    generateBtn.textContent = "Generate Link";
-
-    modal.style.display = "flex";
-    guestName.focus();
-}
-
-function closeGenerator() {
-    modal.style.display = "none";
-}
-
-window.onclick = function(event) {
-    if (event.target === modal) closeGenerator();
-};
-
-document.addEventListener("keydown", function(event) {
-    if (event.key === "Escape" && modal.style.display === "flex") {
-        closeGenerator();
-    }
+navToggle.addEventListener("click", () => {
+    const isOpen = navLinks.classList.toggle("open");
+    navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
 });
 
-// ANTI-SPAM: batasi jarak antar submit (mencegah klik berulang / bot sederhana)
-const SUBMIT_COOLDOWN_MS = 8000;
-let lastSubmitAt = 0;
-
-// SUBMIT FORM GENERATOR
-generatorForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    // Honeypot: field tersembunyi yang hanya akan terisi oleh bot otomatis
-    const honeypot = document.getElementById("hp_field");
-    if (honeypot && honeypot.value.trim() !== "") {
-        // Diam-diam abaikan submit dari bot, jangan kasih tahu bahwa ini terdeteksi
-        return;
-    }
-
-    const now = Date.now();
-    if (now - lastSubmitAt < SUBMIT_COOLDOWN_MS) {
-        alert("Mohon tunggu beberapa detik sebelum generate link lagi.");
-        return;
-    }
-
-    let name = guestName.value.trim();
-
-    // Validasi panjang & bersihkan karakter yang tidak wajar untuk nama tamu
-    if (name === "") {
-        alert("Silakan masukkan nama tamu.");
-        guestName.focus();
-        return;
-    }
-    if (name.length > 60) {
-        alert("Nama tamu terlalu panjang (maksimal 60 karakter).");
-        guestName.focus();
-        return;
-    }
-    // Hanya izinkan huruf, spasi, dan tanda baca umum pada nama (&, ., ', -)
-    if (!/^[\p{L}\s.,'&-]+$/u.test(name)) {
-        alert("Nama tamu mengandung karakter yang tidak didukung.");
-        guestName.focus();
-        return;
-    }
-
-    const selectedTemplate = templates.find(t => t.id === websiteSelect.value);
-    if (!selectedTemplate) {
-        alert("Website tidak ditemukan.");
-        return;
-    }
-
-    const encodedName = encodeURIComponent(name);
-    const finalUrl = `${selectedTemplate.baseUrl}?to=${encodedName}`;
-
-    resultUrl.textContent = finalUrl;
-    lastSubmitAt = now;
-    trackTemplateEvent('generate_link', selectedTemplate.id, selectedTemplate.title);
-
-    generateBtn.disabled = true;
-    generateBtn.textContent = "Berhasil!";
-    saveStatus.textContent = "Menyimpan ke database...";
-    saveStatus.className = "save-status";
-
-    sb.from("generated_links")
-        .insert({
-            template_id: selectedTemplate.id,
-            guest_name: name,
-            generated_url: finalUrl
-        })
-        .then(({ error }) => {
-            if (error) throw error;
-            // Berbeda dengan Apps Script dulu, Supabase kasih tahu status
-            // yang sebenarnya — jadi pesan ini memang benar-benar akurat.
-            saveStatus.textContent = "Data tersimpan di database!";
-            saveStatus.className = "save-status";
-        })
-        .catch((err) => {
-            console.error("Gagal simpan ke Supabase:", err);
-            saveStatus.textContent = "Gagal terhubung ke database, tapi URL tetap siap digunakan.";
-            saveStatus.classList.add("save-status-error");
-        })
-        .finally(() => {
-            generateBtn.disabled = false;
-            generateBtn.textContent = "Generate Link";
-        });
-});
-
-// COPY, OPEN, RESET
-copyBtn.addEventListener("click", function () {
-    const url = resultUrl.textContent.trim();
-    if (url === DEFAULT_RESULT_TEXT) {
-        alert("Silakan generate URL terlebih dahulu.");
-        return;
-    }
-
-    navigator.clipboard.writeText(url).then(() => {
-        showToast("Link berhasil disalin ke clipboard!");
+navLinks.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        navToggle.setAttribute("aria-expanded", "false");
     });
-});
-
-openBtn.addEventListener("click", function () {
-    const url = resultUrl.textContent.trim();
-    if (url === DEFAULT_RESULT_TEXT) {
-        alert("Silakan generate URL terlebih dahulu.");
-        return;
-    }
-    window.open(url, "_blank");
-});
-
-resetBtn.addEventListener("click", function () {
-    guestName.value = "";
-    resultUrl.textContent = DEFAULT_RESULT_TEXT;
-    saveStatus.textContent = "";
 });

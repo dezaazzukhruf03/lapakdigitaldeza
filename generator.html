@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Undangan - Lapak Digital Deza</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="stylesheet" href="generator.css">
+  </head>
+  <body>
+
+    <div class="container">
+
+      <!-- Ditampilkan kalau tidak ada ?client= yang valid dan tidak ada ?admin= -->
+      <div id="invalidState" style="display:none;">
+        <p class="subtitle">Lapak Digital Deza</p>
+        <h1>Link Tidak Valid</h1>
+        <p class="invalid-message">
+          Demi keamanan dan kenyamanan klien LDD,
+          <br>akses ke generator undangan ini terbatas.
+          <br>Silakan hubungi administrator LDD.
+          <br>WhatsApp: <a href="https://wa.me/6283180009427" target="_blank">0831-8000-9427</a>
+        </p>
+      </div>
+
+      <!-- Ditampilkan kalau ?admin=1 tapi belum login -->
+      <div id="adminLoginState" style="display:none;">
+        <p class="subtitle">Lapak Digital Deza</p>
+        <h1>Login Admin</h1>
+        <form id="adminLoginForm">
+          <label for="adminEmail">Email</label>
+          <input type="email" id="adminEmail" required>
+          <label for="adminPassword">Password</label>
+          <input type="password" id="adminPassword" required>
+          <button type="submit" id="adminLoginBtn" class="btn-primary">Login</button>
+          <p id="adminLoginError" class="save-status save-status--error"></p>
+        </form>
+      </div>
+
+      <!-- Ditampilkan kalau ?client= valid ATAU sudah login sebagai admin -->
+      <div id="appState" style="display:none;">
+
+        <p class="subtitle">Lapak Digital Deza</p>
+        <h1>Generator Undangan</h1>
+
+        <details class="usage-steps">
+          <summary>
+            <span>📋 Cara Menggunakan Generator</span>
+            <span class="promo-chevron" aria-hidden="true">&#9662;</span>
+          </summary>
+          <ol>
+            <li><span>Masukkan nama tamu pada kolom <strong>Nama Tamu</strong>. <span class="usage-example">(Contoh: Saudara Joko &amp; Keluarga)</span></span></li>
+            <li><span>Klik tombol <strong>Generate</strong> agar kamu mendapatkan undangan khusus untukmu.</span></li>
+            <li><span>Klik tombol <strong>Buka Link</strong> untuk melihat/mengecek tampilan undangan Anda sebelum dibagikan.</span></li>
+            <li><span>Klik tombol <strong>Copy Link</strong> untuk menyalin tautan, lalu bagikan kepada tamu melalui WhatsApp, Telegram, atau media sosial lainnya.</span></li>
+          </ol>
+        </details>
+
+        <form id="generatorForm">
+
+          <label for="guestName">Nama Tamu</label>
+          <br>
+          <input type="text" id="guestName" placeholder="Masukkan Nama Tamu">
+          <br>
+
+          <!-- Mode admin: dropdown pilih client, diisi otomatis dari Supabase -->
+          <div id="websiteFieldNormal" style="display:none;">
+            <label for="websiteSelect">Pilih Client</label>
+            <select id="websiteSelect">
+              <option value="" selected disabled>-- Pilih Client --</option>
+            </select>
+          </div>
+
+          <!-- Mode client: teks statis, dropdown disembunyikan -->
+          <div id="websiteFieldLocked" style="display:none;">
+            <label>Undangan</label>
+            <p id="lockedWebsiteText" class="locked-website"></p>
+          </div>
+
+          <br>
+
+          <button type="submit" id="generateBtn" class="btn-primary">
+            Generate
+          </button>
+        </form>
+
+        <h2>Hasil URL</h2>
+        <p id="resultUrl">Hasil url akan muncul disini</p>
+        <p id="saveStatus" class="save-status"></p>
+
+        <div class="action-buttons">
+          <button type="button" id="copyBtn" class="btn-secondary">Copy Link</button>
+          <button type="button" id="openBtn" class="btn-secondary">Buka Link</button>
+        </div>
+
+        <h2>Pesan Undangan</h2>
+        <p id="messagePreview" class="message-preview">Pesan undangan akan muncul disini setelah Generate</p>
+        <button type="button" id="copyMessageBtn" class="btn-secondary">Copy Pesan</button>
+        <button type="button" id="resetBtn" class="btn-secondary">Reset</button>
+
+        <a href="https://wa.me/6283180009427" target="_blank" id="whatsappBtn" class="btn-whatsapp">
+          <svg viewBox="0 0 32 32" width="20" height="20" fill="currentColor" aria-hidden="true">
+            <path d="M16.004 3C9.377 3 4 8.373 4 15c0 2.386.71 4.607 1.93 6.463L4 29l7.73-1.9A11.94 11.94 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3zm0 21.75c-1.94 0-3.75-.55-5.29-1.5l-.38-.23-4.59 1.13 1.15-4.47-.25-.4A9.7 9.7 0 0 1 6.25 15c0-5.38 4.38-9.75 9.754-9.75 5.38 0 9.75 4.37 9.75 9.75s-4.37 9.75-9.75 9.75zm5.35-7.3c-.29-.15-1.72-.85-1.99-.95-.27-.1-.46-.15-.66.15-.19.29-.75.95-.92 1.14-.17.19-.34.22-.63.07-.29-.15-1.23-.45-2.34-1.44-.87-.77-1.45-1.72-1.62-2.01-.17-.29-.02-.44.13-.59.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.66-1.6-.91-2.19-.24-.58-.48-.5-.66-.51h-.56c-.19 0-.51.07-.78.36-.27.29-1.02 1-1.02 2.44 0 1.44 1.05 2.83 1.2 3.02.15.19 2.06 3.15 5 4.42.7.3 1.24.48 1.67.61.7.22 1.34.19 1.84.12.56-.08 1.72-.7 1.97-1.38.24-.68.24-1.26.17-1.38-.07-.12-.26-.19-.55-.34z"/>
+          </svg>
+          Hubungi Admin
+        </a>
+
+      </div>
+
+    </div>
+
+    <footer class="site-footer">
+      &copy; 2026 Lapak Digital Deza
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="supabase-client.js"></script>
+    <script src="generator.js"></script>
+  </body>
+</html>

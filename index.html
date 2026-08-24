@@ -155,61 +155,6 @@
     </div>
   </section>
 
-  <!-- MODAL GENERATOR LINK TAMU -->
-  <div class="modal-overlay" id="generatorModal">
-    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="generatorTitle">
-      <button class="modal-close" onclick="closeGenerator()" aria-label="Tutup">&times;</button>
-      
-      <div class="modal-header">
-        <p class="subtitle">Lapak Digital Deza</p>
-        <h2 id="generatorTitle">Generator Undangan</h2>
-      </div>
-
-      <form id="generatorForm">
-        <!-- Honeypot anti-bot: kolom ini disembunyikan dari manusia lewat CSS,
-             tapi bot form-filler biasanya tetap mengisinya -->
-        <div class="hp-field" aria-hidden="true">
-          <label for="hp_field">Jangan diisi</label>
-          <input type="text" id="hp_field" name="hp_field" tabindex="-1" autocomplete="off">
-        </div>
-
-        <div class="form-group">
-          <label for="guestName">Nama Tamu</label>
-          <input type="text" id="guestName" placeholder="Masukkan Nama Tamu" required maxlength="60">
-        </div>
-
-        <div class="form-group">
-          <label for="websiteSelect">Template Dipilih</label>
-          <select id="websiteSelect" disabled></select>
-        </div>
-
-        <button type="submit" id="generateBtn" class="btn-primary">
-          Generate Link
-        </button>
-      </form>
-
-      <div class="result-box">
-        <h3>Hasil URL:</h3>
-        <p id="resultUrl">Hasil url akan muncul disini</p>
-        <p id="saveStatus" class="save-status"></p>
-
-        <div class="action-buttons">
-          <button type="button" id="copyBtn" class="btn-secondary">
-            <i class="fa-regular fa-copy"></i> Copy Link
-          </button>
-          <button type="button" id="openBtn" class="btn-secondary">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Link
-          </button>
-        </div>
-
-        <button type="button" id="resetBtn" class="btn-reset">
-          Reset Input
-        </button>
-      </div>
-
-    </div>
-  </div>
-
   <!-- TOAST NOTIFICATION -->
   <div class="toast" id="toast" role="status" aria-live="polite">Link berhasil disalin!</div>
 
