@@ -138,9 +138,43 @@ function renderCategoryBar() {
     });
 }
 
-// INITIAL RENDER
-renderCategoryBar();
-renderTemplates(templates);
+// DATA TEMPLATES — sekarang diambil dari Supabase, bukan hardcode lagi
+let templates = [];
+
+// Ambil data katalog dari Supabase, ubah nama kolom (snake_case) jadi
+// bentuk yang dipakai kode di bawah (camelCase), sama seperti sebelumnya
+async function loadTemplates() {
+    const { data, error } = await sb.from("templates").select("*").order("created_at");
+
+    if (error) {
+        console.error("Gagal memuat katalog:", error);
+        templateGrid.innerHTML = `<p class="loading-text">Gagal memuat katalog. Coba refresh halaman.</p>`;
+        return [];
+    }
+
+    return data.map(t => ({
+        id: t.id,
+        title: t.title,
+        category: t.category,
+        price: `Rp ${Number(t.price).toLocaleString("id-ID")}`,
+        themeClass: t.theme_class,
+        tag: t.tag,
+        badge: t.badge || "",
+        sampleNames: t.sample_names,
+        sampleDate: t.sample_date,
+        previewUrl: t.preview_url,
+        baseUrl: t.base_url
+    }));
+}
+
+// INITIAL RENDER (sekarang async karena harus tunggu data dari Supabase)
+async function init() {
+    templateGrid.innerHTML = `<p class="loading-text">Memuat katalog...</p>`;
+    templates = await loadTemplates();
+    renderCategoryBar();
+    renderTemplates(templates);
+}
+init();
 
 // SEARCH & FILTER
 let currentCategory = "all";
@@ -260,30 +294,28 @@ generatorForm.addEventListener("submit", function (e) {
     saveStatus.textContent = "Menyimpan ke database...";
     saveStatus.className = "save-status";
 
-    fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({
-            nama: name,
-            website: websiteSelect.value,
-            url: finalUrl
+    sb.from("generated_links")
+        .insert({
+            template_id: selectedTemplate.id,
+            guest_name: name,
+            generated_url: finalUrl
         })
-    })
-    .then(() => {
-        // Catatan: banyak deployment Google Apps Script tidak mengirim header CORS,
-        // sehingga browser tidak selalu bisa membaca isi response walau request sukses.
-        // Karena itu kita tidak mengklaim "100% tersimpan", cukup beri tahu bahwa
-        // request sudah terkirim — dan link tetap bisa langsung dipakai.
-        saveStatus.textContent = "Link siap digunakan. Data sedang disinkronkan ke database.";
-    })
-    .catch(() => {
-        saveStatus.textContent = "Gagal terhubung ke database, tapi URL tetap siap digunakan.";
-        saveStatus.classList.add("save-status-error");
-    })
-    .finally(() => {
-        generateBtn.disabled = false;
-        generateBtn.textContent = "Generate Link";
-    });
+        .then(({ error }) => {
+            if (error) throw error;
+            // Berbeda dengan Apps Script dulu, Supabase kasih tahu status
+            // yang sebenarnya — jadi pesan ini memang benar-benar akurat.
+            saveStatus.textContent = "Data tersimpan di database!";
+            saveStatus.className = "save-status";
+        })
+        .catch((err) => {
+            console.error("Gagal simpan ke Supabase:", err);
+            saveStatus.textContent = "Gagal terhubung ke database, tapi URL tetap siap digunakan.";
+            saveStatus.classList.add("save-status-error");
+        })
+        .finally(() => {
+            generateBtn.disabled = false;
+            generateBtn.textContent = "Generate Link";
+        });
 });
 
 // COPY, OPEN, RESET

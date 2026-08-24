@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Data Undangan - Lapak Digital Deza</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="order-form.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo-brand">
+      <i class="fa-solid fa-paper-plane"></i>
+      <span>Lapak Digital Deza</span>
+    </div>
+  </header>
+
+  <main class="order-form-page">
+
+    <!-- STATE: LOADING -->
+    <div id="stateLoading" class="state-box">
+      <i class="fa-solid fa-spinner fa-spin"></i>
+      <p>Memuat data pesanan...</p>
+    </div>
+
+    <!-- STATE: TIDAK DITEMUKAN -->
+    <div id="stateNotFound" class="state-box" style="display:none;">
+      <i class="fa-solid fa-circle-exclamation"></i>
+      <h2>Kode pesanan tidak ditemukan</h2>
+      <p>Pastikan Anda membuka link yang sama persis dengan yang dikirim Admin. Kalau masih bermasalah, hubungi Admin di bawah ini.</p>
+      <a href="https://wa.me/6283180009427" target="_blank" class="btn-primary">
+        <i class="fa-brands fa-whatsapp"></i> Hubungi Admin
+      </a>
+    </div>
+
+    <!-- STATE: SUDAH PERNAH SUBMIT -->
+    <div id="stateLocked" class="state-box" style="display:none;">
+      <i class="fa-solid fa-lock"></i>
+      <h2>Data sudah pernah dikirim</h2>
+      <p>Data untuk pesanan ini sudah kami terima dan sedang diproses. Kalau ada yang perlu direvisi, hubungi Admin langsung ya (maksimal 3x revisi gratis).</p>
+      <a href="https://wa.me/6283180009427" target="_blank" class="btn-primary">
+        <i class="fa-brands fa-whatsapp"></i> Hubungi Admin untuk Revisi
+      </a>
+    </div>
+
+    <!-- STATE: BERHASIL SUBMIT -->
+    <div id="stateSuccess" class="state-box" style="display:none;">
+      <i class="fa-solid fa-circle-check"></i>
+      <h2>Data berhasil dikirim!</h2>
+      <p>Terima kasih. Undangan Anda akan mulai diproses dalam maksimal 2x24 jam setelah pembayaran dan data lengkap kami terima.</p>
+      <a href="https://wa.me/6283180009427" target="_blank" class="btn-primary">
+        <i class="fa-brands fa-whatsapp"></i> Chat Admin
+      </a>
+    </div>
+
+    <!-- STATE: FORM -->
+    <form id="orderForm" class="order-form" style="display:none;">
+
+      <div class="form-intro">
+        <p class="subtitle">Lapak Digital Deza</p>
+        <h1>Form Pengisian Data Undangan Digital</h1>
+        <p>Assalamu'alaikum Wr. Wb. Terima kasih telah mempercayakan pembuatan undangan digital kepada Lapak Digital Deza. Silakan lengkapi data berikut agar proses pembuatan dapat segera kami kerjakan.</p>
+      </div>
+
+      <!-- Honeypot anti-bot -->
+      <div class="hp-field" aria-hidden="true">
+        <label for="hp_field">Jangan diisi</label>
+        <input type="text" id="hp_field" name="hp_field" tabindex="-1" autocomplete="off">
+      </div>
+
+      <section class="form-section">
+        <h2><i class="fa-solid fa-tag"></i> Detail Pesanan</h2>
+        <div class="form-group">
+          <label>Kode Desain / Template</label>
+          <input type="text" id="templateTitleDisplay" readonly>
+        </div>
+        <div class="form-group">
+          <label>Nama Pemesan</label>
+          <input type="text" id="customerNameDisplay" readonly>
+        </div>
+      </section>
+
+      <section class="form-section" id="driveSection" style="display:none;">
+        <h2><i class="fa-solid fa-images"></i> Foto Mempelai & Galeri</h2>
+        <p class="section-hint">Pengiriman foto dilakukan via Google Drive agar kualitas tetap jernih & HD. Klik tombol di bawah untuk membuka folder khusus pesanan Anda dan unggah foto ke sana.</p>
+        <a id="driveFolderLink" href="#" target="_blank" class="btn-secondary-full">
+          <i class="fa-brands fa-google-drive"></i> Buka Folder Upload Foto
+        </a>
+      </section>
+
+      <section class="form-section">
+        <h2><i class="fa-solid fa-user"></i> Data Mempelai Wanita</h2>
+        <div class="form-group">
+          <label for="brideFullName">Nama Lengkap & Gelar</label>
+          <input type="text" id="brideFullName" required maxlength="100">
+        </div>
+        <div class="form-group">
+          <label for="brideNickname">Nama Panggilan</label>
+          <input type="text" id="brideNickname" required maxlength="50">
+        </div>
+        <div class="form-group">
+          <label for="brideFatherName">Nama Ayah</label>
+          <input type="text" id="brideFatherName" maxlength="100">
+        </div>
+        <div class="form-group">
+          <label for="brideMotherName">Nama Ibu</label>
+          <input type="text" id="brideMotherName" maxlength="100">
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2><i class="fa-solid fa-user"></i> Data Mempelai Pria</h2>
+        <div class="form-group">
+          <label for="groomFullName">Nama Lengkap & Gelar</label>
+          <input type="text" id="groomFullName" required maxlength="100">
+        </div>
+        <div class="form-group">
+          <label for="groomNickname">Nama Panggilan</label>
+          <input type="text" id="groomNickname" required maxlength="50">
+        </div>
+        <div class="form-group">
+          <label for="groomFatherName">Nama Ayah</label>
+          <input type="text" id="groomFatherName" maxlength="100">
+        </div>
+        <div class="form-group">
+          <label for="groomMotherName">Nama Ibu</label>
+          <input type="text" id="groomMotherName" maxlength="100">
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2><i class="fa-solid fa-calendar-days"></i> Data Acara — Akad Nikah</h2>
+        <div class="form-group">
+          <label for="akadDatetime">Hari, Tanggal & Jam</label>
+          <input type="text" id="akadDatetime" placeholder="Contoh: Sabtu, 24 Oktober 2026, 08.00 WIB" required maxlength="150">
+        </div>
+        <div class="form-group">
+          <label for="akadAddress">Alamat Lengkap</label>
+          <textarea id="akadAddress" rows="2" required maxlength="300"></textarea>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2><i class="fa-solid fa-calendar-days"></i> Data Acara — Resepsi</h2>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="resepsiSameAsAkad">
+          Sama dengan Akad
+        </label>
+        <div id="resepsiFields">
+          <div class="form-group">
+            <label for="resepsiDatetime">Hari, Tanggal & Jam</label>
+            <input type="text" id="resepsiDatetime" placeholder="Contoh: Sabtu, 24 Oktober 2026, 11.00 WIB" maxlength="150">
+          </div>
+          <div class="form-group">
+            <label for="resepsiAddress">Alamat Lengkap</label>
+            <textarea id="resepsiAddress" rows="2" maxlength="300"></textarea>
+          </div>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2><i class="fa-solid fa-location-dot"></i> Lokasi Acara</h2>
+        <div class="form-group">
+          <label for="mapsLink">Link Google Maps</label>
+          <input type="url" id="mapsLink" placeholder="https://maps.app.goo.gl/..." maxlength="300">
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2><i class="fa-solid fa-music"></i> Musik / Backsound</h2>
+        <label class="radio-inline">
+          <input type="radio" name="musicChoice" value="bawaan" checked>
+          Gunakan musik bawaan template
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="musicChoice" value="custom">
+          Request judul lagu & penyanyi
+        </label>
+        <div class="form-group" id="musicCustomField" style="display:none;">
+          <label for="musicCustomInput">Judul Lagu & Penyanyi</label>
+          <input type="text" id="musicCustomInput" maxlength="150">
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2><i class="fa-solid fa-gift"></i> Hadiah Digital (Opsional)</h2>
+        <p class="section-hint">Bisa isi lebih dari satu rekening/e-wallet. Kosongkan kalau tidak perlu.</p>
+        <div id="giftAccountsList"></div>
+        <button type="button" id="addGiftAccountBtn" class="btn-add-row">
+          <i class="fa-solid fa-plus"></i> Tambah Rekening
+        </button>
+      </section>
+
+      <section class="form-section">
+        <h2><i class="fa-solid fa-note-sticky"></i> Catatan Tambahan</h2>
+        <div class="form-group">
+          <textarea id="notes" rows="3" maxlength="500" placeholder="Opsional, kalau ada permintaan khusus lainnya"></textarea>
+        </div>
+      </section>
+
+      <div class="policy-note">
+        <p><i class="fa-solid fa-circle-info"></i> Mohon periksa kembali seluruh data sebelum dikirim. Kami memberikan maksimal 3 kali revisi gratis untuk perubahan data (tidak berlaku ganti tema/template setelah pengerjaan dimulai). Estimasi waktu pengerjaan minimal 2×24 jam dan akan dimulai setelah seluruh data serta pembayaran diterima.</p>
+      </div>
+
+      <button type="submit" id="submitBtn" class="btn-primary btn-submit">
+        Kirim Data Undangan
+      </button>
+      <p id="formError" class="form-error" style="display:none;"></p>
+
+    </form>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Lapak Digital Deza. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="order-form.js"></script>
+</body>
+</html>
