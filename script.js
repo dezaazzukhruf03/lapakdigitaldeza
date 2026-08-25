@@ -35,8 +35,6 @@ function renderTemplates(data) {
     }
 
     data.forEach(item => {
-        const askAdminMessage = encodeURIComponent(`Halo Admin Lapak Digital Deza, saya ingin tanya-tanya dulu soal tema "${item.title}" (${item.price}) sebelum pesan.`);
-        const waLink = `https://wa.me/${ADMIN_WA}?text=${askAdminMessage}`;
         const badgeHTML = item.badge ? `<span class="card-badge">${item.badge}</span>` : '';
 
         const cardHTML = `
@@ -57,15 +55,15 @@ function renderTemplates(data) {
 
                     <div class="card-actions-top">
                         <a href="${item.previewUrl}" target="_blank" class="btn-action btn-preview" onclick="trackTemplateEvent('preview_template', '${item.id}', '${item.title}')">
-                            <i class="fa-solid fa-eye"></i> Preview
+                            <i class="fa-solid fa-eye"></i> Lihat Tema
                         </a>
-                        <a href="pesan.html?template=${item.id}" class="btn-action btn-use" onclick="trackTemplateEvent('open_order_form', '${item.id}', '${item.title}')">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i> Pesan Tema Ini
-                        </a>
+                        <button type="button" class="btn-action btn-preview" onclick="openDemoModal('${item.id}')">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Kustom Nama Tamu
+                        </button>
                     </div>
 
-                    <a href="${waLink}" target="_blank" class="btn-action btn-order-full" onclick="trackTemplateEvent('ask_admin_click', '${item.id}', '${item.title}')">
-                        <i class="fa-brands fa-whatsapp"></i> Tanya Dulu ke Admin
+                    <a href="pesan.html?template=${item.id}" class="btn-action btn-order-full" onclick="trackTemplateEvent('open_order_form', '${item.id}', '${item.title}')">
+                        <i class="fa-solid fa-cart-shopping"></i> Pesan Tema
                     </a>
                 </div>
             </div>
@@ -168,4 +166,104 @@ navLinks.querySelectorAll("a").forEach(link => {
         navLinks.classList.remove("open");
         navToggle.setAttribute("aria-expanded", "false");
     });
+});
+
+// ===============================
+// MODAL DEMO: KUSTOM NAMA TAMU
+// ===============================
+const demoModal = document.getElementById("demoModal");
+const demoForm = document.getElementById("demoForm");
+const demoGuestName = document.getElementById("demoGuestName");
+const demoGenerateBtn = document.getElementById("demoGenerateBtn");
+const demoResultUrl = document.getElementById("demoResultUrl");
+const demoCopyBtn = document.getElementById("demoCopyBtn");
+const demoOpenBtn = document.getElementById("demoOpenBtn");
+const demoResetBtn = document.getElementById("demoResetBtn");
+const toast = document.getElementById("toast");
+
+const DEMO_DEFAULT_TEXT = "Hasil url akan muncul disini";
+let demoActiveTemplate = null;
+
+function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 2500);
+}
+
+function openDemoModal(templateId) {
+    demoActiveTemplate = templates.find(t => t.id === templateId);
+    if (!demoActiveTemplate) return;
+
+    demoGuestName.value = "";
+    demoResultUrl.textContent = DEMO_DEFAULT_TEXT;
+    demoModal.style.display = "flex";
+    demoGuestName.focus();
+
+    trackTemplateEvent('open_demo_modal', demoActiveTemplate.id, demoActiveTemplate.title);
+}
+
+function closeDemoModal() {
+    demoModal.style.display = "none";
+}
+
+window.addEventListener("click", (event) => {
+    if (event.target === demoModal) closeDemoModal();
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && demoModal.style.display === "flex") {
+        closeDemoModal();
+    }
+});
+
+demoForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    // Honeypot anti-bot
+    const honeypot = document.getElementById("demo_hp_field");
+    if (honeypot && honeypot.value.trim() !== "") return;
+
+    const name = demoGuestName.value.trim();
+    if (name === "") {
+        alert("Silakan masukkan nama tamu.");
+        demoGuestName.focus();
+        return;
+    }
+    if (!demoActiveTemplate) return;
+
+    const baseUrl = demoActiveTemplate.baseUrl;
+    const finalUrl = `${baseUrl}${baseUrl.endsWith("/") ? "" : "/"}?to=${encodeURIComponent(name)}`;
+    demoResultUrl.textContent = finalUrl;
+
+    trackTemplateEvent('generate_demo_link', demoActiveTemplate.id, demoActiveTemplate.title);
+
+    // Simpan sebagai data demo (opsional, buat lihat tema mana yang paling sering dicoba)
+    sb.from("generated_links").insert({
+        template_id: demoActiveTemplate.id,
+        guest_name: name,
+        generated_url: finalUrl
+    }).then(() => {}).catch((err) => console.error("Gagal simpan demo:", err));
+});
+
+demoCopyBtn.addEventListener("click", function () {
+    const url = demoResultUrl.textContent.trim();
+    if (url === DEMO_DEFAULT_TEXT) {
+        alert("Silakan klik \"Lihat Contoh\" terlebih dahulu.");
+        return;
+    }
+    navigator.clipboard.writeText(url).then(() => showToast("Link berhasil disalin!"));
+});
+
+demoOpenBtn.addEventListener("click", function () {
+    const url = demoResultUrl.textContent.trim();
+    if (url === DEMO_DEFAULT_TEXT) {
+        alert("Silakan klik \"Lihat Contoh\" terlebih dahulu.");
+        return;
+    }
+    window.open(url, "_blank");
+});
+
+demoResetBtn.addEventListener("click", function () {
+    demoGuestName.value = "";
+    demoResultUrl.textContent = DEMO_DEFAULT_TEXT;
 });

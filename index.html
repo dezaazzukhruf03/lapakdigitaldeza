@@ -155,6 +155,54 @@
     </div>
   </section>
 
+  <!-- MODAL DEMO: KUSTOM NAMA TAMU (contoh tampilan, bukan pesanan resmi) -->
+  <div class="modal-overlay" id="demoModal">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="demoModalTitle">
+      <button class="modal-close" onclick="closeDemoModal()" aria-label="Tutup">&times;</button>
+
+      <div class="modal-header">
+        <p class="subtitle">Contoh Tampilan</p>
+        <h2 id="demoModalTitle">Kustom Nama Tamu</h2>
+        <p class="modal-subtext">Coba lihat bagaimana tampilan undangan ini kalau nama tamu diganti — ini cuma contoh, belum jadi pesanan resmi.</p>
+      </div>
+
+      <form id="demoForm">
+        <div class="hp-field" aria-hidden="true">
+          <label for="demo_hp_field">Jangan diisi</label>
+          <input type="text" id="demo_hp_field" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label for="demoGuestName">Nama Tamu</label>
+          <input type="text" id="demoGuestName" placeholder="Masukkan Nama Tamu" required maxlength="60">
+        </div>
+
+        <button type="submit" id="demoGenerateBtn" class="btn-primary">
+          Lihat Contoh
+        </button>
+      </form>
+
+      <div class="result-box">
+        <h3>Hasil URL:</h3>
+        <p id="demoResultUrl">Hasil url akan muncul disini</p>
+
+        <div class="action-buttons">
+          <button type="button" id="demoCopyBtn" class="btn-secondary">
+            <i class="fa-regular fa-copy"></i> Copy Link
+          </button>
+          <button type="button" id="demoOpenBtn" class="btn-secondary">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Link
+          </button>
+        </div>
+
+        <button type="button" id="demoResetBtn" class="btn-reset">
+          Reset Input
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- TOAST NOTIFICATION -->
   <div class="toast" id="toast" role="status" aria-live="polite">Link berhasil disalin!</div>
 

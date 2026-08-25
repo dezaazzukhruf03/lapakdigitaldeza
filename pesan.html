@@ -101,27 +101,17 @@
       </section>
 
       <section class="form-section">
-        <h2><i class="fa-solid fa-user"></i> Data Mempelai Wanita</h2>
+        <h2><i class="fa-solid fa-users"></i> Data Mempelai</h2>
         <div class="form-group">
-          <label for="brideFullName">Nama Lengkap & Gelar</label>
-          <input type="text" id="brideFullName" required maxlength="100">
+          <label for="mempelaiSelect">Isi data siapa dulu?</label>
+          <select id="mempelaiSelect">
+            <option value="pria">Mempelai Pria</option>
+            <option value="wanita">Mempelai Wanita</option>
+          </select>
+          <p class="section-hint">💡 Pilihan ini menentukan urutan nama di undangan, misalnya "Pria & Wanita" atau "Wanita & Pria".</p>
         </div>
-        <div class="form-group">
-          <label for="brideNickname">Nama Panggilan</label>
-          <input type="text" id="brideNickname" required maxlength="50">
-        </div>
-        <div class="form-group">
-          <label for="brideFatherName">Nama Ayah</label>
-          <input type="text" id="brideFatherName" maxlength="100">
-        </div>
-        <div class="form-group">
-          <label for="brideMotherName">Nama Ibu</label>
-          <input type="text" id="brideMotherName" maxlength="100">
-        </div>
-      </section>
 
-      <section class="form-section">
-        <h2><i class="fa-solid fa-user"></i> Data Mempelai Pria</h2>
+        <h3 class="mempelai-subtitle"><i class="fa-solid fa-user"></i> Mempelai Pria</h3>
         <div class="form-group">
           <label for="groomFullName">Nama Lengkap & Gelar</label>
           <input type="text" id="groomFullName" required maxlength="100">
@@ -137,6 +127,24 @@
         <div class="form-group">
           <label for="groomMotherName">Nama Ibu</label>
           <input type="text" id="groomMotherName" maxlength="100">
+        </div>
+
+        <h3 class="mempelai-subtitle"><i class="fa-solid fa-user"></i> Mempelai Wanita</h3>
+        <div class="form-group">
+          <label for="brideFullName">Nama Lengkap & Gelar</label>
+          <input type="text" id="brideFullName" required maxlength="100">
+        </div>
+        <div class="form-group">
+          <label for="brideNickname">Nama Panggilan</label>
+          <input type="text" id="brideNickname" required maxlength="50">
+        </div>
+        <div class="form-group">
+          <label for="brideFatherName">Nama Ayah</label>
+          <input type="text" id="brideFatherName" maxlength="100">
+        </div>
+        <div class="form-group">
+          <label for="brideMotherName">Nama Ibu</label>
+          <input type="text" id="brideMotherName" maxlength="100">
         </div>
       </section>
 

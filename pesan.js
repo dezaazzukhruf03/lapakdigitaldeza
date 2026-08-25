@@ -38,6 +38,10 @@ async function loadTemplate() {
 
 loadTemplate();
 
+// DROPDOWN "Isi data siapa dulu?" — sekarang hanya menentukan urutan nama
+// di hasil akhir undangan (Lara & Deza vs Deza & Lara), bukan sembunyikan/kunci form
+const mempelaiSelect = document.getElementById("mempelaiSelect");
+
 // TOGGLE: RESEPSI SAMA DENGAN AKAD
 const resepsiSameAsAkad = document.getElementById("resepsiSameAsAkad");
 const resepsiFields = document.getElementById("resepsiFields");
@@ -137,6 +141,7 @@ orderForm.addEventListener("submit", async function (e) {
         p_customer_name: document.getElementById("customerName").value.trim(),
         p_customer_phone: document.getElementById("customerPhone").value.trim(),
         p_customer_email: document.getElementById("customerEmail").value.trim(),
+        p_name_order: mempelaiSelect.value,
         p_bride_full_name: document.getElementById("brideFullName").value.trim(),
         p_bride_nickname: document.getElementById("brideNickname").value.trim(),
         p_bride_father_name: document.getElementById("brideFatherName").value.trim(),

@@ -336,8 +336,12 @@ body {
 
 .btn-order-full {
   width: 100%;
-  background: #25d366;
+  background: var(--primary-color);
   color: white;
+}
+
+.btn-order-full:hover {
+  background: var(--primary-hover);
 }
 
 .no-results {
@@ -512,6 +516,13 @@ body {
 .modal-header {
   text-align: center;
   margin-bottom: 20px;
+}
+
+.modal-subtext {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+  line-height: 1.5;
 }
 
 .subtitle {

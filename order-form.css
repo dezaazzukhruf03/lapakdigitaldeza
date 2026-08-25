@@ -94,6 +94,21 @@
   line-height: 1.5;
 }
 
+.mempelai-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 16px 0 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mempelai-subtitle:first-of-type {
+  margin-top: 0;
+}
+
 .form-section .form-group:last-child {
   margin-bottom: 0;
 }
