@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Program Afiliasi - Lapak Digital Deza</title>
+  <meta name="description" content="Rekomendasikan undangan digital Lapak Digital Deza, dapatkan komisi. Cek saldo referral & mitra Anda di sini.">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="referral.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZMEMP5WQY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FZMEMP5WQY');
+  </script>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo-brand">
+      <i class="fa-solid fa-paper-plane"></i>
+      <span>Lapak Digital Deza</span>
+    </div>
+    <a href="index.html" class="btn-contact">
+      <i class="fa-solid fa-arrow-left"></i> Kembali ke Katalog
+    </a>
+  </header>
+
+  <main class="referral-page">
+
+    <!-- STATE: LOADING (kalau ada ?kode=) -->
+    <div id="stateLoading" class="state-box" style="display:none;">
+      <i class="fa-solid fa-spinner fa-spin"></i>
+      <p>Memuat saldo Anda...</p>
+    </div>
+
+    <!-- STATE: KODE TIDAK DITEMUKAN -->
+    <div id="stateNotFound" class="state-box" style="display:none;">
+      <i class="fa-solid fa-circle-exclamation"></i>
+      <h2>Kode tidak ditemukan</h2>
+      <p>Pastikan link yang Anda buka sama persis dengan yang diberikan Admin.</p>
+      <a href="https://wa.me/6283180009427" target="_blank" class="btn-primary">
+        <i class="fa-brands fa-whatsapp"></i> Hubungi Admin
+      </a>
+    </div>
+
+    <!-- STATE: KARTU SALDO -->
+    <div id="stateSaldo" style="display:none;">
+      <div class="saldo-card">
+        <p class="subtitle">Kartu Saldo</p>
+        <h1 id="partnerName">-</h1>
+        <span class="partner-type-badge" id="partnerTypeBadge">-</span>
+
+        <div class="saldo-summary">
+          <div class="saldo-box">
+            <span class="saldo-label">Total Komisi</span>
+            <span class="saldo-value" id="totalEarned">Rp 0</span>
+          </div>
+          <div class="saldo-box">
+            <span class="saldo-label">Sudah Dicairkan</span>
+            <span class="saldo-value" id="totalWithdrawn">Rp 0</span>
+          </div>
+          <div class="saldo-box saldo-box-highlight">
+            <span class="saldo-label">Sisa Saldo</span>
+            <span class="saldo-value" id="availableBalance">Rp 0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="referral-section">
+        <h2><i class="fa-solid fa-clock-rotate-left"></i> Riwayat Komisi</h2>
+        <div id="transactionsList" class="history-list">
+          <p class="empty-hint">Belum ada komisi tercatat.</p>
+        </div>
+      </div>
+
+      <div class="referral-section">
+        <h2><i class="fa-solid fa-money-bill-transfer"></i> Riwayat Pencairan</h2>
+        <div id="withdrawalsList" class="history-list">
+          <p class="empty-hint">Belum ada riwayat pencairan.</p>
+        </div>
+      </div>
+
+      <div class="referral-section">
+        <h2><i class="fa-solid fa-hand-holding-dollar"></i> Ajukan Pencairan</h2>
+        <p class="section-hint">Minimal Rp5.000 untuk Pulsa/Kuota, atau Rp10.000 untuk E-Wallet/Transfer Bank. Biaya admin pencairan ditanggung penerima.</p>
+
+        <form id="withdrawalForm">
+          <div class="form-group">
+            <label for="withdrawAmount">Jumlah Pencairan (Rp)</label>
+            <input type="number" id="withdrawAmount" min="5000" step="500" required>
+          </div>
+
+          <div class="form-group">
+            <label for="withdrawMethod">Metode Pencairan</label>
+            <select id="withdrawMethod" required>
+              <option value="pulsa">Pulsa / Kuota (min. Rp5.000)</option>
+              <option value="ewallet">Saldo E-Wallet - DANA/OVO/GoPay/ShopeePay (min. Rp10.000)</option>
+              <option value="bank">Transfer Bank (min. Rp10.000)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="withdrawAccountInfo">Detail Tujuan</label>
+            <input type="text" id="withdrawAccountInfo" placeholder="Contoh: 0812xxxxxxxx (untuk pulsa) / DANA 0812xxxxxxxx a.n. Nama / BCA 1234567890 a.n. Nama" required maxlength="150">
+          </div>
+
+          <button type="submit" id="withdrawSubmitBtn" class="btn-primary">
+            Ajukan Pencairan
+          </button>
+          <p id="withdrawError" class="form-error" style="display:none;"></p>
+          <p id="withdrawSuccess" class="form-success" style="display:none;">✅ Pengajuan berhasil dikirim! Admin akan proses dalam 1x24 jam.</p>
+        </form>
+      </div>
+    </div>
+
+    <!-- STATE: BROSUR PROMO PUBLIK (default, tanpa ?kode=) -->
+    <div id="statePromo">
+
+      <section class="promo-hero">
+        <p class="subtitle">Lapak Digital Deza</p>
+        <h1>✨ Rekomendasikan Undangan, Auto Cuan! ✨</h1>
+        <p>Punya teman yang mau nikah? Atau kamu punya bisnis WO, MUA, Fotografer, Pelaminan, atau vendor pernikahan lainnya? Jaringan pertemanan & bisnis kamu bisa jadi sumber penghasilan tambahan bersama Lapak Digital Deza!</p>
+
+        <div class="promo-check-saldo">
+          <label for="checkSaldoInput">Sudah punya kode? Cek saldo Anda:</label>
+          <div class="promo-check-row">
+            <input type="text" id="checkSaldoInput" placeholder="Masukkan kode referral Anda">
+            <button type="button" id="checkSaldoBtn" class="btn-primary">Cek Saldo</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="promo-programs">
+
+        <div class="promo-card">
+          <h3>1️⃣ Program Referral</h3>
+          <p class="promo-tagline">Khusus Teman & Kerabat</p>
+          <p>Cocok untuk kamu yang ingin cuan santai tanpa target bulanan!</p>
+
+          <ul class="promo-list">
+            <li><strong>Komisi Dasar:</strong> Rp2.000/undangan</li>
+            <li><strong>Booster Komisi +50%:</strong> Bawa 5 order pertama, mulai order ke-6, komisi naik permanen jadi Rp3.000/undangan!</li>
+            <li>Tidak reset & tidak pernah hangus!</li>
+          </ul>
+
+          <p class="promo-subheading">Cara Ikut:</p>
+          <ol class="promo-list">
+            <li>Ajak teman/kerabat pesan undangan di Lapak Digital Deza.</li>
+            <li>Kirim Nama + Nomor HP teman ke Admin sebagai bukti rekomendasi.</li>
+            <li>Setelah teman fix order, komisi langsung dicatat. ✅</li>
+          </ol>
+        </div>
+
+        <div class="promo-card">
+          <h3>2️⃣ Program Mitra Prioritas</h3>
+          <p class="promo-tagline">Khusus Vendor Pernikahan (WO, MUA, Fotografer, Pelaminan, dll)</p>
+
+          <p class="promo-subheading">Bebas Pilih Skema Keuntungan:</p>
+          <ul class="promo-list">
+            <li><strong>Opsi A — Komisi Tunai VIP:</strong> Jual harga katalog kami, dapat Rp5.000/undangan.</li>
+            <li><strong>Opsi B — Harga Khusus Reseller:</strong> Bayar harga nett (diskon Rp5.000 dari katalog), bebas tentukan harga jual sendiri.</li>
+          </ul>
+
+          <p class="promo-subheading">Fasilitas:</p>
+          <ul class="promo-list">
+            <li>Tanpa modal & deposit di awal</li>
+            <li>Bebas target bulanan</li>
+            <li>Prioritas antrean pengerjaan</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="promo-cta">
+        <p><strong>📲 Mau Gabung & Mulai Cuan?</strong></p>
+        <p>Hubungi Admin sekarang untuk didaftarkan dan dapatkan kode referral/mitra Anda.</p>
+        <a href="https://wa.me/6283180009427?text=Halo%20Admin%2C%20saya%20mau%20daftar%20Program%20Referral%2FMitra%20Lapak%20Digital%20Deza." target="_blank" class="btn-whatsapp">
+          <i class="fa-brands fa-whatsapp"></i> Daftar Sekarang
+        </a>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Lapak Digital Deza. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="referral.js"></script>
+</body>
+</html>
