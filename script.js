@@ -36,11 +36,15 @@ function renderTemplates(data) {
 
     data.forEach(item => {
         const badgeHTML = item.badge ? `<span class="card-badge">${item.badge}</span>` : '';
+        const previewStyle = item.colorStart && item.colorEnd
+            ? `style="background: linear-gradient(135deg, ${item.colorStart} 0%, ${item.colorEnd} 100%);"`
+            : '';
+        const previewClass = item.colorStart && item.colorEnd ? '' : item.themeClass;
 
         const cardHTML = `
             <div class="card" data-category="${item.category}">
                 ${badgeHTML}
-                <div class="card-preview ${item.themeClass}">
+                <div class="card-preview ${previewClass}" ${previewStyle}>
                     <div class="phone-mockup">
                         <div class="phone-screen">
                             <span class="mock-tag">${item.tag}</span>
@@ -51,7 +55,7 @@ function renderTemplates(data) {
                 </div>
                 <div class="card-info">
                     <h3>${item.title}</h3>
-                    <span class="price-tag">${item.price}</span>
+                    <span class="price-tag">Mulai dari ${item.price}</span>
 
                     <div class="card-actions-top">
                         <a href="${item.previewUrl}" target="_blank" class="btn-action btn-preview" onclick="trackTemplateEvent('preview_template', '${item.id}', '${item.title}')">
@@ -101,7 +105,7 @@ function renderCategoryBar() {
 let templates = [];
 
 async function loadTemplates() {
-    const { data, error } = await sb.from("templates").select("*").order("created_at");
+    const { data, error } = await sb.from("templates").select("*").order("display_order").order("created_at");
 
     if (error) {
         console.error("Gagal memuat katalog:", error);
@@ -115,6 +119,8 @@ async function loadTemplates() {
         category: t.category,
         price: `Rp ${Number(t.price).toLocaleString("id-ID")}`,
         themeClass: t.theme_class,
+        colorStart: t.color_start,
+        colorEnd: t.color_end,
         tag: t.tag,
         badge: t.badge || "",
         sampleNames: t.sample_names,

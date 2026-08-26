@@ -169,6 +169,72 @@
   font-size: 0.85rem;
 }
 
+/* PILIHAN PAKET */
+.package-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.package-card {
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.package-card.selected {
+  border-color: var(--primary-color);
+  background: #eff6ff;
+}
+
+.package-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.package-card-name {
+  font-weight: 700;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.package-card-price {
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.package-card-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.package-card-features {
+  list-style: none;
+  padding: 0;
+  font-size: 0.82rem;
+  color: #374151;
+}
+
+.package-card-features li {
+  padding: 3px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.package-card-features li::before {
+  content: "\2713";
+  color: #16a34a;
+  font-weight: 700;
+}
+
 /* DRIVE LINK BUTTON */
 .btn-secondary-full {
   display: flex;

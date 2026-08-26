@@ -15,25 +15,75 @@ function showState(stateEl) {
     stateEl.style.display = "block";
 }
 
-// MUAT DATA TEMPLATE SAAT HALAMAN DIBUKA
+// MUAT DATA TEMPLATE & PAKET SAAT HALAMAN DIBUKA
+let selectedPackageId = null;
+let templateBasePrice = 0;
+
 async function loadTemplate() {
     if (!templateId) {
         showState(stateNotFound);
         return;
     }
 
-    const { data, error } = await sb.from("templates").select("*").eq("id", templateId).single();
+    const [templateResult, packagesResult] = await Promise.all([
+        sb.from("templates").select("*").eq("id", templateId).single(),
+        sb.from("packages").select("*").order("display_order")
+    ]);
 
-    if (error || !data) {
-        console.error("Template tidak ditemukan:", error);
+    if (templateResult.error || !templateResult.data) {
+        console.error("Template tidak ditemukan:", templateResult.error);
         showState(stateNotFound);
         return;
     }
 
-    document.getElementById("templateTitleDisplay").value = data.title;
-    document.getElementById("templatePriceDisplay").value = `Rp ${Number(data.price).toLocaleString("id-ID")}`;
+    if (packagesResult.error || !packagesResult.data || packagesResult.data.length === 0) {
+        console.error("Gagal memuat paket:", packagesResult.error);
+        document.getElementById("packageOptions").innerHTML = `<p class="loading-text">Paket belum tersedia. Hubungi Admin.</p>`;
+        showState(orderForm);
+        return;
+    }
 
+    document.getElementById("templateTitleDisplay").value = templateResult.data.title;
+    templateBasePrice = Number(templateResult.data.price);
+
+    renderPackageOptions(packagesResult.data);
     showState(orderForm);
+}
+
+function renderPackageOptions(packages) {
+    const container = document.getElementById("packageOptions");
+    container.innerHTML = "";
+
+    packages.forEach((pkg, index) => {
+        const finalPrice = templateBasePrice + Number(pkg.price_addition || 0);
+        const features = Array.isArray(pkg.features) ? pkg.features : [];
+
+        const card = document.createElement("div");
+        card.className = "package-card" + (index === 0 ? " selected" : "");
+        card.dataset.packageId = pkg.id;
+        card.innerHTML = `
+            <div class="package-card-header">
+                <span class="package-card-name"><i class="fa-solid fa-circle-check" style="opacity:${index === 0 ? 1 : 0}"></i> ${pkg.name}</span>
+                <span class="package-card-price">Rp ${finalPrice.toLocaleString("id-ID")}</span>
+            </div>
+            ${pkg.description ? `<p class="package-card-desc">${pkg.description}</p>` : ""}
+            ${features.length > 0 ? `<ul class="package-card-features">${features.map(f => `<li>${f}</li>`).join("")}</ul>` : ""}
+        `;
+        card.addEventListener("click", () => selectPackage(pkg.id));
+        container.appendChild(card);
+
+        if (index === 0) selectedPackageId = pkg.id;
+    });
+}
+
+function selectPackage(packageId) {
+    selectedPackageId = packageId;
+    document.querySelectorAll(".package-card").forEach(card => {
+        const isSelected = card.dataset.packageId === packageId;
+        card.classList.toggle("selected", isSelected);
+        const icon = card.querySelector(".package-card-name i");
+        if (icon) icon.style.opacity = isSelected ? "1" : "0";
+    });
 }
 
 loadTemplate();
@@ -138,6 +188,7 @@ orderForm.addEventListener("submit", async function (e) {
 
     const payload = {
         p_template_id: templateId,
+        p_package_id: selectedPackageId,
         p_customer_name: document.getElementById("customerName").value.trim(),
         p_customer_phone: document.getElementById("customerPhone").value.trim(),
         p_customer_email: document.getElementById("customerEmail").value.trim(),
@@ -165,6 +216,10 @@ orderForm.addEventListener("submit", async function (e) {
     };
 
     // Validasi dasar
+    if (!selectedPackageId) {
+        showFormError("Mohon pilih paket terlebih dahulu.");
+        return;
+    }
     if (!payload.p_customer_name || !payload.p_customer_phone) {
         showFormError("Mohon lengkapi nama pemesan dan nomor WhatsApp.");
         return;
