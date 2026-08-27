@@ -72,6 +72,46 @@ body {
   white-space: nowrap;
 }
 
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  color: var(--primary-color);
+  border: 1.5px solid var(--primary-color);
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.btn-back:hover {
+  background: #eff6ff;
+}
+
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #25d366;
+  color: white;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-whatsapp:hover {
+  background: #1ebe5d;
+}
+
 .btn-contact-mobile {
   display: none;
 }
@@ -496,6 +536,8 @@ body {
   background: white;
   width: 90%;
   max-width: 480px;
+  max-height: 88vh;
+  overflow-y: auto;
   border-radius: 16px;
   padding: 25px;
   position: relative;

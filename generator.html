@@ -6,31 +6,56 @@
     <title>Generator Undangan - Lapak Digital Deza</title>
     <meta name="robots" content="noindex, nofollow">
 
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="generator.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   </head>
   <body>
 
-    <div class="container">
-
-      <a href="index.html" class="back-to-catalog">
+    <header class="navbar">
+      <div class="logo-brand">
+        <i class="fa-solid fa-paper-plane"></i>
+        <span>Lapak Digital Deza</span>
+      </div>
+      <a href="index.html" class="btn-back">
         <i class="fa-solid fa-arrow-left"></i> Kembali ke Katalog
       </a>
+    </header>
 
-      <!-- Ditampilkan kalau tidak ada ?client= yang valid dan tidak ada ?admin= -->
+    <div class="container">
+
+      <!-- Ditampilkan default (tanpa parameter apapun) -->
+      <div id="lookupState" style="display:none;">
+        <h1>Kustom Nama Tamu Undangan Anda</h1>
+        <p class="invalid-message">Sudah pesan undangan dan undangan Anda sudah jadi? Masukkan Kode Pesanan Anda untuk membuat link nama tamu sendiri.</p>
+
+        <label for="lookupCodeInput">Kode Pesanan</label>
+        <input type="text" id="lookupCodeInput" placeholder="Masukkan Kode Pesanan Anda">
+        <button type="button" id="lookupBtn" class="btn-primary">Buka Generator Saya</button>
+
+        <p class="lookup-hint">Belum tahu Kode Pesanan Anda?</p>
+        <a href="https://wa.me/6283180009427" target="_blank" class="btn-whatsapp btn-whatsapp-full">
+          <i class="fa-brands fa-whatsapp"></i> Hubungi Admin
+        </a>
+
+        <p class="lookup-divider">Baru mau coba-coba lihat contoh dulu? <a href="index.html">Kembali ke katalog</a> dan klik "Kustom Nama Tamu" di kartu tema pilihan Anda.</p>
+      </div>
+
+      <!-- Ditampilkan kalau ?client= diisi tapi kodenya tidak ditemukan -->
       <div id="invalidState" style="display:none;">
-        <p class="subtitle">Lapak Digital Deza</p>
-        <h1>Link Tidak Valid</h1>
+        <h1>Kode Tidak Ditemukan</h1>
         <p class="invalid-message">
-          Demi keamanan dan kenyamanan klien LDD,
-          <br>akses ke generator undangan ini terbatas.
-          <br>Silakan hubungi administrator LDD.
-          <br>WhatsApp: <a href="https://wa.me/6283180009427" target="_blank">0831-8000-9427</a>
+          Kode pesanan yang Anda masukkan tidak ditemukan, atau undangan Anda belum selesai dibuat.
+          <br>Coba periksa kembali kode Anda, atau hubungi Admin.
         </p>
+        <a href="https://wa.me/6283180009427" target="_blank" class="btn-whatsapp btn-whatsapp-full">
+          <i class="fa-brands fa-whatsapp"></i> Hubungi Admin
+        </a>
+        <a href="generator.html" class="btn-secondary" style="display:inline-block; width:auto; padding:10px 20px; text-decoration:none; margin-top:10px;">Coba Lagi</a>
       </div>
 
       <!-- Ditampilkan kalau ?admin=1 tapi belum login -->
       <div id="adminLoginState" style="display:none;">
-        <p class="subtitle">Lapak Digital Deza</p>
         <h1>Login Admin</h1>
         <form id="adminLoginForm">
           <label for="adminEmail">Email</label>
@@ -45,7 +70,6 @@
       <!-- Ditampilkan kalau ?client= valid ATAU sudah login sebagai admin -->
       <div id="appState" style="display:none;">
 
-        <p class="subtitle">Lapak Digital Deza</p>
         <h1>Generator Undangan</h1>
 
         <details class="usage-steps">

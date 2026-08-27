@@ -7,35 +7,17 @@
 body {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     background: #f8fafc;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
-    padding: 20px;
 }
 
 .container {
-    width: 100%;
+    width: calc(100% - 40px);
     max-width: 500px;
+    margin: 30px auto 60px auto;
     background: #ffffff;
     padding: 30px;
     border-radius: 16px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-}
-
-.back-to-catalog {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.85rem;
-    color: #64748b;
-    text-decoration: none;
-    margin-bottom: 16px;
-}
-
-.back-to-catalog:hover {
-    color: #2563eb;
 }
 
 h1 {
@@ -252,6 +234,37 @@ h2 {
 .usage-steps[open] .promo-chevron { transform: rotate(180deg); }
 
 .invalid-message { color: #6b7280; line-height: 1.6; text-align: center; }
+
+.lookup-hint {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin-top: 14px;
+    margin-bottom: 8px;
+}
+
+.lookup-hint a { color: #2563eb; }
+
+.btn-whatsapp-full {
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.lookup-divider {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin-top: 18px;
+    line-height: 1.5;
+    padding-top: 14px;
+    border-top: 1px dashed #e2e8f0;
+}
+
+.lookup-divider a {
+    color: #2563eb;
+    font-weight: 600;
+}
 
 .locked-website {
     padding: 12px;

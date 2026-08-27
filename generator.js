@@ -2,6 +2,7 @@
 // AMBIL ELEMEN HTML
 // ===============================
 const invalidState = document.getElementById("invalidState");
+const lookupState = document.getElementById("lookupState");
 const adminLoginState = document.getElementById("adminLoginState");
 const appState = document.getElementById("appState");
 
@@ -79,6 +80,7 @@ async function initMode() {
             await enterAdminMode();
         } else {
             currentMode = "invalid";
+            lookupState.style.display = "none";
             invalidState.style.display = "none";
             appState.style.display = "none";
             adminLoginState.style.display = "block";
@@ -97,6 +99,7 @@ async function initMode() {
         currentMode = "client";
         lockedOrder = data[0];
 
+        lookupState.style.display = "none";
         invalidState.style.display = "none";
         adminLoginState.style.display = "none";
         appState.style.display = "block";
@@ -106,13 +109,23 @@ async function initMode() {
         return;
     }
 
-    showInvalid();
+    // Tidak ada parameter sama sekali: tampilkan pintu masuk pelanggan
+    showLookup();
+}
+
+function showLookup() {
+    currentMode = "invalid";
+    appState.style.display = "none";
+    adminLoginState.style.display = "none";
+    invalidState.style.display = "none";
+    lookupState.style.display = "block";
 }
 
 function showInvalid() {
     currentMode = "invalid";
     appState.style.display = "none";
     adminLoginState.style.display = "none";
+    lookupState.style.display = "none";
     invalidState.style.display = "block";
 }
 
@@ -128,6 +141,7 @@ async function enterAdminMode() {
     currentMode = "admin";
     adminOrdersList = data;
 
+    lookupState.style.display = "none";
     invalidState.style.display = "none";
     adminLoginState.style.display = "none";
     appState.style.display = "block";
@@ -144,6 +158,20 @@ async function enterAdminMode() {
 }
 
 initMode();
+
+// LOOKUP: PELANGGAN MASUKKAN KODE PESANAN SENDIRI
+document.getElementById("lookupBtn").addEventListener("click", () => {
+    const code = document.getElementById("lookupCodeInput").value.trim();
+    if (!code) {
+        alert("Silakan masukkan Kode Pesanan Anda.");
+        return;
+    }
+    window.location.href = `generator.html?client=${encodeURIComponent(code)}`;
+});
+
+document.getElementById("lookupCodeInput").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") document.getElementById("lookupBtn").click();
+});
 
 // ===============================
 // LOGIN ADMIN
