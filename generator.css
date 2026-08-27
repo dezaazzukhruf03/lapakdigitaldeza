@@ -24,6 +24,20 @@ body {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
+.back-to-catalog {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: #64748b;
+    text-decoration: none;
+    margin-bottom: 16px;
+}
+
+.back-to-catalog:hover {
+    color: #2563eb;
+}
+
 h1 {
     text-align: center;
     color: #2563eb;

@@ -188,7 +188,33 @@ const demoResetBtn = document.getElementById("demoResetBtn");
 const toast = document.getElementById("toast");
 
 const DEMO_DEFAULT_TEXT = "Hasil url akan muncul disini";
+const DEMO_DEFAULT_MESSAGE_TEXT = "Pesan undangan akan muncul disini setelah generate";
 let demoActiveTemplate = null;
+
+function buildDemoInvitationMessage(guestNameValue, coupleName, url) {
+    return `Kepada Yth.
+Bapak/Ibu/Saudara/i
+*${guestNameValue}*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh
+
+Tanpa mengurangi rasa hormat, melalui pesan ini kami ingin membagikan kabar bahagia sekaligus mengundang Bapak/Ibu/Saudara/i untuk menjadi bagian dari momen berharga pernikahan kami:
+
+✨ *${coupleName}* ✨
+
+Silakan klik tautan di bawah ini untuk melihat detail lokasi dan rangkaian acara:
+🔗 ${url}
+
+NB: Buka menggunakan Google Chrome untuk pengalaman visual terbaik.
+
+Ungkapan terima kasih yang tulus kami sampaikan atas doa restu dan kehadiran Bapak/Ibu/Saudara/i sekalian.
+
+Wassalamu'alaikum Warahmatullahi Wabarakatuh
+
+Terima Kasih,
+Hormat kami,
+*Keluarga Besar ${coupleName}*`;
+}
 
 function showToast(message) {
     toast.textContent = message;
@@ -202,6 +228,7 @@ function openDemoModal(templateId) {
 
     demoGuestName.value = "";
     demoResultUrl.textContent = DEMO_DEFAULT_TEXT;
+    document.getElementById("demoMessagePreview").textContent = DEMO_DEFAULT_MESSAGE_TEXT;
     demoModal.style.display = "flex";
     demoGuestName.focus();
 
@@ -241,6 +268,9 @@ demoForm.addEventListener("submit", function (e) {
     const finalUrl = `${baseUrl}${baseUrl.endsWith("/") ? "" : "/"}?to=${encodeURIComponent(name)}`;
     demoResultUrl.textContent = finalUrl;
 
+    const coupleName = demoActiveTemplate.sampleNames || demoActiveTemplate.title;
+    document.getElementById("demoMessagePreview").textContent = buildDemoInvitationMessage(name, coupleName, finalUrl);
+
     trackTemplateEvent('generate_demo_link', demoActiveTemplate.id, demoActiveTemplate.title);
 
     // Simpan sebagai data demo (opsional, buat lihat tema mana yang paling sering dicoba)
@@ -272,4 +302,14 @@ demoOpenBtn.addEventListener("click", function () {
 demoResetBtn.addEventListener("click", function () {
     demoGuestName.value = "";
     demoResultUrl.textContent = DEMO_DEFAULT_TEXT;
+    document.getElementById("demoMessagePreview").textContent = DEMO_DEFAULT_MESSAGE_TEXT;
+});
+
+document.getElementById("demoCopyMessageBtn").addEventListener("click", function () {
+    const message = document.getElementById("demoMessagePreview").textContent.trim();
+    if (message === DEMO_DEFAULT_MESSAGE_TEXT) {
+        alert("Silakan klik \"Lihat Contoh\" terlebih dahulu.");
+        return;
+    }
+    navigator.clipboard.writeText(message).then(() => showToast("Pesan berhasil disalin!"));
 });

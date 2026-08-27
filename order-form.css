@@ -235,6 +235,27 @@
   font-weight: 700;
 }
 
+.package-card-features-rest {
+  display: none;
+}
+
+.package-card-features-rest.expanded {
+  display: block;
+}
+
+.package-toggle-btn {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 0 0 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 /* DRIVE LINK BUTTON */
 .btn-secondary-full {
   display: flex;

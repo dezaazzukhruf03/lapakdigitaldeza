@@ -57,19 +57,46 @@ function renderPackageOptions(packages) {
     packages.forEach((pkg, index) => {
         const finalPrice = templateBasePrice + Number(pkg.price_addition || 0);
         const features = Array.isArray(pkg.features) ? pkg.features : [];
+        const mainFeatures = features.slice(0, 3);
+        const restFeatures = features.slice(3);
 
         const card = document.createElement("div");
         card.className = "package-card" + (index === 0 ? " selected" : "");
         card.dataset.packageId = pkg.id;
+
+        const restFeaturesHTML = restFeatures.length > 0 ? `
+            <ul class="package-card-features package-card-features-rest">
+                ${restFeatures.map(f => `<li>${f}</li>`).join("")}
+            </ul>
+            <button type="button" class="package-toggle-btn">
+                Lihat Detail Fitur <i class="fa-solid fa-chevron-down"></i>
+            </button>
+        ` : "";
+
         card.innerHTML = `
             <div class="package-card-header">
                 <span class="package-card-name"><i class="fa-solid fa-circle-check" style="opacity:${index === 0 ? 1 : 0}"></i> ${pkg.name}</span>
                 <span class="package-card-price">Rp ${finalPrice.toLocaleString("id-ID")}</span>
             </div>
             ${pkg.description ? `<p class="package-card-desc">${pkg.description}</p>` : ""}
-            ${features.length > 0 ? `<ul class="package-card-features">${features.map(f => `<li>${f}</li>`).join("")}</ul>` : ""}
+            ${mainFeatures.length > 0 ? `<ul class="package-card-features">${mainFeatures.map(f => `<li>${f}</li>`).join("")}</ul>` : ""}
+            ${restFeaturesHTML}
         `;
         card.addEventListener("click", () => selectPackage(pkg.id));
+
+        // Tombol "Lihat Detail Fitur" tidak boleh ikut memilih paket, cukup buka/tutup detail
+        const toggleBtn = card.querySelector(".package-toggle-btn");
+        if (toggleBtn) {
+            toggleBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const restList = card.querySelector(".package-card-features-rest");
+                const isExpanded = restList.classList.toggle("expanded");
+                toggleBtn.innerHTML = isExpanded
+                    ? `Sembunyikan Detail <i class="fa-solid fa-chevron-up"></i>`
+                    : `Lihat Detail Fitur <i class="fa-solid fa-chevron-down"></i>`;
+            });
+        }
+
         container.appendChild(card);
 
         if (index === 0) selectedPackageId = pkg.id;
