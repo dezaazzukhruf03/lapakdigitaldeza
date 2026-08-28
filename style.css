@@ -207,6 +207,103 @@ body {
   border-color: var(--primary-color);
 }
 
+/* SEKSI FITUR LENGKAP */
+.features-section {
+  max-width: 1100px;
+  margin: 40px auto 10px auto;
+  padding: 0 20px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 16px;
+}
+
+.feature-item {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 20px 12px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.feature-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 10px auto;
+  border-radius: 50%;
+  background: #eff6ff;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+}
+
+.feature-item span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  line-height: 1.3;
+}
+
+/* SEKSI CARA ORDER */
+.how-to-section {
+  max-width: 760px;
+  margin: 20px auto 60px auto;
+  padding: 0 20px;
+}
+
+.how-to-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.how-to-step {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.how-to-number {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.how-to-content h3 {
+  font-size: 1.05rem;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.how-to-content p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.how-to-cta {
+  text-align: center;
+  margin-top: 30px;
+}
+
 /* MAIN CONTAINER & CATEGORY BAR */
 .main-container {
   max-width: 1100px;
@@ -247,6 +344,64 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 25px;
+}
+
+/* MOBILE: 2 kartu sejajar, elemen diperkecil supaya tetap muat & terbaca */
+@media (max-width: 600px) {
+  .template-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .card-preview {
+    height: 130px;
+  }
+
+  .phone-mockup {
+    width: 80px;
+    height: 105px;
+    padding: 5px;
+  }
+
+  .mock-tag {
+    font-size: 7px;
+    padding: 1px 5px;
+    margin-bottom: 3px;
+  }
+
+  .phone-screen h4 { font-size: 8px; }
+  .phone-screen p { font-size: 6px; margin-top: 2px; }
+
+  .card-badge {
+    top: 8px;
+    right: 8px;
+    font-size: 0.6rem;
+    padding: 2px 7px;
+  }
+
+  .card-info {
+    padding: 10px;
+  }
+
+  .card-info h3 {
+    font-size: 0.8rem;
+    margin-bottom: 2px;
+  }
+
+  .price-tag {
+    font-size: 0.75rem;
+    margin-bottom: 8px;
+  }
+
+  .card-actions-top {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .btn-action {
+    padding: 7px;
+    font-size: 0.7rem;
+  }
 }
 
 .card {
