@@ -38,31 +38,27 @@ function renderTemplates(data) {
         const badgeHTML = item.badge ? `<span class="card-badge">${item.badge}</span>` : '';
         const hasPhoto = !!item.previewImageUrl;
 
-        const previewStyle = (!hasPhoto && item.colorStart && item.colorEnd)
+        const screenBgStyle = (!hasPhoto && item.colorStart && item.colorEnd)
             ? `style="background: linear-gradient(135deg, ${item.colorStart} 0%, ${item.colorEnd} 100%);"`
             : '';
-        const previewClass = hasPhoto
-            ? 'has-photo'
-            : (item.colorStart && item.colorEnd ? '' : item.themeClass);
+        const screenBgClass = (!hasPhoto && !(item.colorStart && item.colorEnd)) ? (item.themeClass || '') : '';
 
         const previewInner = hasPhoto
-            ? `<div class="phone-mockup-real">
-                   <div class="phone-notch"></div>
-                   <img src="${item.previewImageUrl}" alt="${item.title}" class="phone-screenshot" loading="lazy">
-               </div>`
-            : `<div class="phone-mockup">
-                   <div class="phone-screen">
-                       <span class="mock-tag">${item.tag}</span>
-                       <h4>${item.sampleNames}</h4>
-                       <p>${item.sampleDate}</p>
-                   </div>
+            ? `<img src="${item.previewImageUrl}" alt="${item.title}" class="phone-screenshot" loading="lazy">`
+            : `<div class="phone-screen-fallback ${screenBgClass}" ${screenBgStyle}>
+                   <span class="mock-tag">${item.tag}</span>
+                   <h4>${item.sampleNames}</h4>
+                   <p>${item.sampleDate}</p>
                </div>`;
 
         const cardHTML = `
             <div class="card" data-category="${item.category}">
                 ${badgeHTML}
-                <div class="card-preview ${previewClass}" ${previewStyle}>
-                    ${previewInner}
+                <div class="card-preview">
+                    <div class="phone-mockup-real">
+                        <div class="phone-notch"></div>
+                        ${previewInner}
+                    </div>
                 </div>
                 <div class="card-info">
                     <h3>${item.title}</h3>

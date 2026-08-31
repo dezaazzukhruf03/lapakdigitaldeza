@@ -379,13 +379,20 @@ body {
   }
 
   .card-preview {
-    height: 130px;
+    height: 200px;
   }
 
-  .phone-mockup {
-    width: 80px;
-    height: 105px;
-    padding: 5px;
+  .phone-mockup-real {
+    width: 95px;
+    height: 165px;
+    padding: 4px;
+    border-radius: 16px;
+  }
+
+  .phone-notch {
+    width: 32px;
+    height: 10px;
+    top: 4px;
   }
 
   .mock-tag {
@@ -394,8 +401,8 @@ body {
     margin-bottom: 3px;
   }
 
-  .phone-screen h4 { font-size: 8px; }
-  .phone-screen p { font-size: 6px; margin-top: 2px; }
+  .phone-screen-fallback h4 { font-size: 9px; }
+  .phone-screen-fallback p { font-size: 6.5px; margin-top: 2px; }
 
   .card-badge {
     top: 8px;
@@ -460,24 +467,24 @@ body {
 
 /* MOCKUP HP CSS MURNI */
 .card-preview {
-  height: 220px;
+  height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #f1f5f9;
 }
 
 .theme-softred { background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%); }
 .theme-darkjava { background: linear-gradient(135deg, #2c3e50 0%, #000000 100%); }
 .theme-gold { background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); }
-.card-preview.has-photo { background: #f1f5f9; }
 
-/* BINGKAI HP REALISTIS UNTUK SCREENSHOT ASLI */
+/* BINGKAI HP REALISTIS — dipakai selalu, baik isinya foto asli maupun teks placeholder */
 .phone-mockup-real {
   position: relative;
-  width: 130px;
-  height: 196px;
+  width: 145px;
+  height: 260px;
   background: #111827;
-  border-radius: 20px;
+  border-radius: 22px;
   padding: 6px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
 }
@@ -487,13 +494,14 @@ body {
   top: 6px;
   left: 50%;
   transform: translateX(-50%);
-  width: 46px;
-  height: 14px;
+  width: 50px;
+  height: 15px;
   background: #111827;
   border-radius: 0 0 10px 10px;
   z-index: 2;
 }
 
+/* ISI: SCREENSHOT ASLI (kalau preview_image_url sudah diisi) */
 .phone-screenshot {
   width: 100%;
   height: 100%;
@@ -503,19 +511,11 @@ body {
   display: block;
 }
 
-.phone-mockup {
-  width: 130px;
-  height: 180px;
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 8px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-}
-
-.phone-screen {
+/* ISI: TEKS PLACEHOLDER (fallback selama belum ada screenshot) */
+.phone-screen-fallback {
   width: 100%;
   height: 100%;
-  border-radius: 10px;
+  border-radius: 14px;
   background: #f1f5f9;
   display: flex;
   flex-direction: column;
@@ -534,8 +534,19 @@ body {
   margin-bottom: 6px;
 }
 
-.phone-screen h4 { font-size: 11px; color: #333; }
-.phone-screen p { font-size: 8px; color: #666; margin-top: 4px; }
+.phone-screen-fallback h4 {
+  font-size: 12px;
+  color: white;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+.phone-screen-fallback p {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 4px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
 
 /* CARD BODY & BUTTONS */
 .card-info {
