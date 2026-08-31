@@ -38,14 +38,14 @@ function renderTemplates(data) {
         const badgeHTML = item.badge ? `<span class="card-badge">${item.badge}</span>` : '';
         const hasPhoto = !!item.previewImageUrl;
 
-        const screenBgStyle = (!hasPhoto && item.colorStart && item.colorEnd)
+        const previewStyle = (item.colorStart && item.colorEnd)
             ? `style="background: linear-gradient(135deg, ${item.colorStart} 0%, ${item.colorEnd} 100%);"`
             : '';
-        const screenBgClass = (!hasPhoto && !(item.colorStart && item.colorEnd)) ? (item.themeClass || '') : '';
+        const previewClass = (item.colorStart && item.colorEnd) ? '' : (item.themeClass || '');
 
         const previewInner = hasPhoto
             ? `<img src="${item.previewImageUrl}" alt="${item.title}" class="phone-screenshot" loading="lazy">`
-            : `<div class="phone-screen-fallback ${screenBgClass}" ${screenBgStyle}>
+            : `<div class="phone-screen-fallback">
                    <span class="mock-tag">${item.tag}</span>
                    <h4>${item.sampleNames}</h4>
                    <p>${item.sampleDate}</p>
@@ -54,7 +54,7 @@ function renderTemplates(data) {
         const cardHTML = `
             <div class="card" data-category="${item.category}">
                 ${badgeHTML}
-                <div class="card-preview">
+                <div class="card-preview ${previewClass}" ${previewStyle}>
                     <div class="phone-mockup-real">
                         <div class="phone-notch"></div>
                         ${previewInner}
