@@ -36,22 +36,33 @@ function renderTemplates(data) {
 
     data.forEach(item => {
         const badgeHTML = item.badge ? `<span class="card-badge">${item.badge}</span>` : '';
-        const previewStyle = item.colorStart && item.colorEnd
+        const hasPhoto = !!item.previewImageUrl;
+
+        const previewStyle = (!hasPhoto && item.colorStart && item.colorEnd)
             ? `style="background: linear-gradient(135deg, ${item.colorStart} 0%, ${item.colorEnd} 100%);"`
             : '';
-        const previewClass = item.colorStart && item.colorEnd ? '' : item.themeClass;
+        const previewClass = hasPhoto
+            ? 'has-photo'
+            : (item.colorStart && item.colorEnd ? '' : item.themeClass);
+
+        const previewInner = hasPhoto
+            ? `<div class="phone-mockup-real">
+                   <div class="phone-notch"></div>
+                   <img src="${item.previewImageUrl}" alt="${item.title}" class="phone-screenshot" loading="lazy">
+               </div>`
+            : `<div class="phone-mockup">
+                   <div class="phone-screen">
+                       <span class="mock-tag">${item.tag}</span>
+                       <h4>${item.sampleNames}</h4>
+                       <p>${item.sampleDate}</p>
+                   </div>
+               </div>`;
 
         const cardHTML = `
             <div class="card" data-category="${item.category}">
                 ${badgeHTML}
                 <div class="card-preview ${previewClass}" ${previewStyle}>
-                    <div class="phone-mockup">
-                        <div class="phone-screen">
-                            <span class="mock-tag">${item.tag}</span>
-                            <h4>${item.sampleNames}</h4>
-                            <p>${item.sampleDate}</p>
-                        </div>
-                    </div>
+                    ${previewInner}
                 </div>
                 <div class="card-info">
                     <h3>${item.title}</h3>
@@ -121,6 +132,7 @@ async function loadTemplates() {
         themeClass: t.theme_class,
         colorStart: t.color_start,
         colorEnd: t.color_end,
+        previewImageUrl: t.preview_image_url,
         tag: t.tag,
         badge: t.badge || "",
         sampleNames: t.sample_names,
