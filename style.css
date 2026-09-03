@@ -928,14 +928,3 @@ body {
   color: var(--text-muted);
   font-size: 0.85rem;
 }
-
-.footer-admin-link {
-  color: var(--text-muted);
-  text-decoration: none;
-  font-size: 0.78rem;
-}
-
-.footer-admin-link:hover {
-  color: var(--primary-color);
-  text-decoration: underline;
-}

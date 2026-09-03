@@ -91,6 +91,16 @@
 }
 .history-item-amount { font-weight: 700; color: var(--primary-color); }
 .history-item-date { color: var(--text-muted); font-size: 0.75rem; }
+.proof-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  color: var(--primary-color);
+  text-decoration: none;
+  margin-top: 4px;
+}
+.proof-link:hover { text-decoration: underline; }
 .status-pill {
   font-size: 0.7rem;
   font-weight: 700;

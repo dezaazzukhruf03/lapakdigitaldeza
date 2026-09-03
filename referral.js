@@ -68,6 +68,7 @@ async function loadSaldo() {
                 <div>
                     <div>${methodLabel[w.method] || w.method}</div>
                     <div class="history-item-date">${formatDate(w.requested_at)}</div>
+                    ${w.proof_url ? `<a href="${w.proof_url}" target="_blank" class="proof-link"><i class="fa-solid fa-image"></i> Lihat Bukti</a>` : ''}
                 </div>
                 <div>
                     <span class="history-item-amount">${formatRupiah(w.amount_requested)}</span>

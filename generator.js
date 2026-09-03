@@ -65,6 +65,38 @@ Hormat kami,
 }
 
 // ===============================
+// RIWAYAT LINK YANG SUDAH DI-GENERATE
+// ===============================
+async function loadHistory(orderCode) {
+    const historyList = document.getElementById("historyList");
+
+    if (!orderCode) {
+        historyList.innerHTML = `<p class="empty-hint">Belum ada link yang dibuat.</p>`;
+        return;
+    }
+
+    const { data, error } = await sb.rpc("get_generated_links_history", { p_order_code: orderCode });
+
+    if (error) {
+        console.error("Gagal memuat riwayat:", error);
+        historyList.innerHTML = `<p class="empty-hint">Gagal memuat riwayat.</p>`;
+        return;
+    }
+
+    if (!data || data.length === 0) {
+        historyList.innerHTML = `<p class="empty-hint">Belum ada link yang dibuat.</p>`;
+        return;
+    }
+
+    historyList.innerHTML = data.map(row => `
+        <div class="history-item">
+            <span class="history-name"><i class="fa-solid fa-user"></i> ${row.guest_name}</span>
+            <a href="${row.generated_url}" target="_blank" class="history-url">${row.generated_url}</a>
+        </div>
+    `).join("");
+}
+
+// ===============================
 // TENTUKAN MODE SAAT HALAMAN DIBUKA
 // ===============================
 async function initMode() {
@@ -106,6 +138,7 @@ async function initMode() {
         websiteFieldNormal.style.display = "none";
         websiteFieldLocked.style.display = "block";
         lockedWebsiteText.textContent = lockedOrder.couple_display_name || lockedOrder.order_code;
+        loadHistory(lockedOrder.order_code);
         return;
     }
 
@@ -154,6 +187,10 @@ async function enterAdminMode() {
         opt.value = order.order_code;
         opt.textContent = order.couple_display_name || order.order_code;
         websiteSelect.appendChild(opt);
+    });
+
+    websiteSelect.addEventListener("change", () => {
+        loadHistory(websiteSelect.value);
     });
 }
 
@@ -259,6 +296,7 @@ generatorForm.addEventListener("submit", async function (e) {
             if (error) throw error;
             saveStatus.textContent = "Tersimpan!";
             saveStatus.classList.add("save-status--success");
+            loadHistory(orderCode);
         })
         .catch((err) => {
             console.error("Gagal simpan:", err);

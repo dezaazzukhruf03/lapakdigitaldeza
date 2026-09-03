@@ -203,6 +203,86 @@ h2 {
 .save-status--success { color: #16a34a; }
 .save-status--error { color: #dc2626; }
 
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+    max-height: 190px;
+    overflow-y: auto;
+    padding-right: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+.history-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.history-list::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+.history-list::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.history-list::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+.history-item {
+    padding: 10px 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 3px solid #2563eb;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.history-item:hover {
+    background: #eff6ff;
+    border-left-color: #1d4ed8;
+}
+
+.history-item .history-name {
+    font-weight: 600;
+    color: #1f2937;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.history-item .history-name i {
+    color: #2563eb;
+    font-size: 0.75rem;
+}
+
+.history-item .history-url {
+    display: block;
+    font-size: 0.72rem;
+    color: #2563eb;
+    word-break: break-all;
+    margin-top: 4px;
+    padding-top: 4px;
+    border-top: 1px dashed #dbeafe;
+    text-decoration: none;
+}
+
+.history-item .history-url:hover {
+    text-decoration: underline;
+}
+
+.empty-hint {
+    color: #9ca3af;
+    font-size: 0.85rem;
+    text-align: center;
+    padding: 10px;
+}
+
 .action-buttons { display: flex; gap: 10px; margin-top: 15px; margin-bottom: 10px; }
 .action-buttons button { flex: 1; min-width: 0; margin-bottom: 0; }
 
