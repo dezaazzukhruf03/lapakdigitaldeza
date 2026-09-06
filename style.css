@@ -8,6 +8,16 @@
   --border-color: #e2e8f0;
 }
 
+[data-theme="dark"] {
+  --primary-color: #3b82f6;
+  --primary-hover: #60a5fa;
+  --bg-color: #0f172a;
+  --card-bg: #1e293b;
+  --text-dark: #f1f5f9;
+  --text-muted: #94a3b8;
+  --border-color: #334155;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -945,4 +955,98 @@ body {
   padding: 20px;
   color: var(--text-muted);
   font-size: 0.85rem;
+}
+
+/* =========================================================
+   MODE GELAP — override untuk elemen yang warnanya hardcode
+   (elemen yang sudah pakai var(--bg-color) dkk otomatis ikut
+   berubah sendiri tanpa perlu ditulis di sini)
+========================================================= */
+
+[data-theme="dark"] body {
+  background-color: var(--bg-color);
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .navbar,
+[data-theme="dark"] .nav-links,
+[data-theme="dark"] .cat-btn,
+[data-theme="dark"] .review-card,
+[data-theme="dark"] .faq-item,
+[data-theme="dark"] .modal-box,
+[data-theme="dark"] .btn-secondary,
+[data-theme="dark"] .btn-back {
+  background-color: var(--card-bg);
+  color: var(--text-dark);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .cat-btn.active,
+[data-theme="dark"] .cat-btn:hover {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+[data-theme="dark"] .search-container input,
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group select,
+[data-theme="dark"] .form-group textarea {
+  background-color: var(--card-bg);
+  color: var(--text-dark);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .review-text {
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .faq-item p {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .feature-item,
+[data-theme="dark"] .state-box,
+[data-theme="dark"] .package-card,
+[data-theme="dark"] .referral-section,
+[data-theme="dark"] .form-section {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .package-card.selected {
+  background-color: rgba(59, 130, 246, 0.12);
+}
+
+[data-theme="dark"] #resultUrl,
+[data-theme="dark"] .message-preview,
+[data-theme="dark"] .loading-text,
+[data-theme="dark"] .history-item {
+  background-color: var(--bg-color);
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .card-preview.has-photo,
+[data-theme="dark"] .card-preview {
+  background-color: #0b1220;
+}
+
+/* TOMBOL GANTI TEMA */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-dark);
+  cursor: pointer;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+}
+
+.theme-toggle:hover {
+  background: var(--bg-color);
 }
