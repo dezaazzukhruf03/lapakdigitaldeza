@@ -174,6 +174,14 @@ body {
   padding: 40px 20px 20px 20px;
 }
 
+.hero-title-only {
+  padding-bottom: 10px;
+}
+
+.hero-search-only {
+  padding-top: 10px;
+}
+
 .hero h1 {
   font-size: 2rem;
   color: var(--text-dark);
@@ -338,7 +346,7 @@ body {
 
 /* MAIN CONTAINER & CATEGORY BAR */
 .main-container {
-  max-width: 1100px;
+  max-width: 1400px;
   margin: 20px auto 60px auto;
   padding: 0 20px;
 }
@@ -374,72 +382,74 @@ body {
 /* TEMPLATE GRID */
 .template-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 18px;
 }
 
-/* MOBILE: 2 kartu sejajar, elemen diperkecil supaya tetap muat & terbaca */
+/* MOBILE: 3 kartu sejajar, elemen diperkecil lagi supaya tetap muat & terbaca */
 @media (max-width: 600px) {
   .template-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
   }
 
   .card-preview {
-    height: 200px;
+    height: 140px;
   }
 
   .phone-mockup-real {
-    width: 95px;
-    height: 165px;
-    padding: 4px;
-    border-radius: 16px;
+    width: 65px;
+    height: 115px;
+    padding: 3px;
+    border-radius: 12px;
   }
 
   .phone-notch {
-    width: 32px;
-    height: 10px;
-    top: 4px;
+    width: 22px;
+    height: 7px;
+    top: 3px;
+    border-radius: 0 0 6px 6px;
   }
 
   .mock-tag {
-    font-size: 7px;
-    padding: 1px 5px;
-    margin-bottom: 3px;
-  }
-
-  .phone-screen-fallback h4 { font-size: 9px; }
-  .phone-screen-fallback p { font-size: 6.5px; margin-top: 2px; }
-
-  .card-badge {
-    top: 8px;
-    right: 8px;
-    font-size: 0.6rem;
-    padding: 2px 7px;
-  }
-
-  .card-info {
-    padding: 10px;
-  }
-
-  .card-info h3 {
-    font-size: 0.8rem;
+    font-size: 5.5px;
+    padding: 1px 4px;
     margin-bottom: 2px;
   }
 
+  .phone-screen-fallback h4 { font-size: 6.5px; }
+  .phone-screen-fallback p { font-size: 5px; margin-top: 1px; }
+
+  .card-badge {
+    top: 5px;
+    right: 5px;
+    font-size: 0.5rem;
+    padding: 1px 5px;
+  }
+
+  .card-info {
+    padding: 7px;
+  }
+
+  .card-info h3 {
+    font-size: 0.65rem;
+    margin-bottom: 2px;
+    line-height: 1.2;
+  }
+
   .price-tag {
-    font-size: 0.75rem;
-    margin-bottom: 8px;
+    font-size: 0.62rem;
+    margin-bottom: 6px;
   }
 
   .card-actions-top {
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
   }
 
   .btn-action {
-    padding: 7px;
-    font-size: 0.7rem;
+    padding: 5px;
+    font-size: 0.58rem;
   }
 }
 
@@ -474,7 +484,7 @@ body {
 
 /* MOCKUP HP CSS MURNI */
 .card-preview {
-  height: 300px;
+  height: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -488,23 +498,23 @@ body {
 /* BINGKAI HP REALISTIS — dipakai selalu, baik isinya foto asli maupun teks placeholder */
 .phone-mockup-real {
   position: relative;
-  width: 145px;
-  height: 260px;
+  width: 120px;
+  height: 215px;
   background: #111827;
-  border-radius: 22px;
-  padding: 6px;
+  border-radius: 18px;
+  padding: 5px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
 }
 
 .phone-notch {
   position: absolute;
-  top: 6px;
+  top: 5px;
   left: 50%;
   transform: translateX(-50%);
-  width: 50px;
-  height: 15px;
+  width: 42px;
+  height: 12px;
   background: #111827;
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 8px 8px;
   z-index: 2;
 }
 
@@ -555,11 +565,11 @@ body {
 
 /* CARD BODY & BUTTONS */
 .card-info {
-  padding: 18px;
+  padding: 14px;
 }
 
 .card-info h3 {
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   margin-bottom: 4px;
 }
 
@@ -567,7 +577,8 @@ body {
   font-weight: 700;
   color: var(--primary-color);
   display: block;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
 }
 
 .card-actions-top {
