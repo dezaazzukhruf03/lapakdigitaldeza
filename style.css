@@ -50,17 +50,38 @@ body {
 .logo-brand {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 1px;
   font-weight: 700;
   font-size: 1.5rem;
   color: var(--primary-color);
 }
 
 .logo-icon {
-  height: 28px;
-  width: 28px;
+  height: 30px;
+  width: 30px;
   object-fit: contain;
   flex-shrink: 0;
+  transform: translateY(-8px); /* Geser logo ke atas sebesar 4px */
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.logo-title {
+  font-size: 1.5rem;
+}
+
+.logo-subtitle {
+  font-size: 0.62rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-top: 5px;
+  margin-left: -29px; /* Menggeser ke kiri melewati area logo-icon */
 }
 
 .nav-links {

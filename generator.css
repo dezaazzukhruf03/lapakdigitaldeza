@@ -74,6 +74,37 @@ body {
     color: var(--text-muted);
 }
 
+[data-theme="dark"] .invalid-message,
+[data-theme="dark"] .lookup-hint,
+[data-theme="dark"] .lookup-divider {
+    color: var(--text-dark);
+}
+
+[data-theme="dark"] .lookup-divider {
+    border-top-color: var(--border-color);
+}
+
+[data-theme="dark"] .history-item:hover {
+    background: rgba(37, 99, 235, 0.22);
+    border-left-color: #60a5fa;
+}
+
+[data-theme="dark"] .history-list {
+    scrollbar-color: #475569 var(--card-bg);
+}
+
+[data-theme="dark"] .history-list::-webkit-scrollbar-track {
+    background: var(--card-bg);
+}
+
+[data-theme="dark"] .history-list::-webkit-scrollbar-thumb {
+    background: #475569;
+}
+
+[data-theme="dark"] .history-list::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
 [data-theme="dark"] .btn-secondary {
     background: var(--card-bg);
     color: #2563eb;
