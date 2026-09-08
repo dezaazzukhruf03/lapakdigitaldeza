@@ -28,6 +28,10 @@
                 const next = current === "dark" ? "light" : "dark";
                 sessionStorage.setItem(THEME_KEY, next);
                 applyTheme(next);
+
+                // Animasi putar kecil biar terasa hidup
+                this.classList.add("spin");
+                setTimeout(() => this.classList.remove("spin"), 400);
             });
         });
     });

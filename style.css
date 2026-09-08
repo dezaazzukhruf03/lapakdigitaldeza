@@ -9,12 +9,12 @@
 }
 
 [data-theme="dark"] {
-  --primary-color: #3b82f6;
+  --primary-color: #2563eb;
   --primary-hover: #60a5fa;
   --bg-color: #0f172a;
   --card-bg: #1e293b;
   --text-dark: #f1f5f9;
-  --text-muted: #94a3b8;
+  --text-muted: #f1f5f9;
   --border-color: #334155;
 }
 
@@ -50,9 +50,9 @@ body {
 .logo-brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 2px;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   color: var(--primary-color);
 }
 
@@ -968,6 +968,11 @@ body {
   color: var(--text-dark);
 }
 
+[data-theme="dark"] .btn-preview {
+  background: rgba(37, 99, 235, 0.12);
+  color: #ffffff;
+}
+
 [data-theme="dark"] .navbar,
 [data-theme="dark"] .nav-links,
 [data-theme="dark"] .cat-btn,
@@ -1044,9 +1049,32 @@ body {
   cursor: pointer;
   font-size: 0.95rem;
   flex-shrink: 0;
-  transition: background 0.15s, color 0.15s;
+  margin-left: 10px;
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
 }
 
 .theme-toggle:hover {
   background: var(--bg-color);
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.theme-toggle:active {
+  transform: scale(0.92);
+}
+
+.theme-toggle i {
+  transition: transform 0.4s ease;
+}
+
+.theme-toggle.spin i {
+  transform: rotate(360deg);
+}
+
+.theme-toggle .fa-sun {
+  color: #ffffff;
+}
+
+.theme-toggle .fa-moon {
+  color: #000000;
 }

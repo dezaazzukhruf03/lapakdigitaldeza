@@ -186,3 +186,24 @@
   border-radius: 8px;
   font-weight: 700;
 }
+
+/* DARK MODE */
+[data-theme="dark"] .promo-check-saldo {
+  background: rgba(37, 99, 235, 0.12);
+  border-color: rgba(37, 99, 235, 0.3);
+}
+
+[data-theme="dark"] .promo-check-saldo label {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .promo-check-row input {
+  background: var(--card-bg);
+  color: var(--text-dark);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .promo-cta {
+  background: rgba(34, 197, 94, 0.12);
+  border-color: rgba(34, 197, 94, 0.3);
+}
