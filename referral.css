@@ -207,3 +207,8 @@
   background: rgba(34, 197, 94, 0.12);
   border-color: rgba(34, 197, 94, 0.3);
 }
+
+[data-theme="dark"] .promo-card > p,
+[data-theme="dark"] .promo-list {
+  color: var(--text-muted);
+}

@@ -57,6 +57,23 @@ body {
     color: #93c5fd;
 }
 
+[data-theme="dark"] .history-item {
+    background: rgba(37, 99, 235, 0.12);
+    border-color: rgba(37, 99, 235, 0.3);
+}
+
+[data-theme="dark"] .history-item .history-name {
+    color: var(--text-dark);
+}
+
+[data-theme="dark"] .history-item .history-url {
+    color: #93c5fd;
+}
+
+[data-theme="dark"] .empty-hint {
+    color: var(--text-muted);
+}
+
 [data-theme="dark"] .btn-secondary {
     background: var(--card-bg);
     color: #2563eb;

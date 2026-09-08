@@ -306,3 +306,20 @@
   text-align: center;
   margin-top: 10px;
 }
+
+/* DARK MODE */
+[data-theme="dark"] .form-section input[readonly] {
+  background: var(--card-bg);
+  color: var(--text-muted);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .btn-add-row {
+  background: rgba(37, 99, 235, 0.12);
+  border-color: rgba(37, 99, 235, 0.3);
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .package-card-features {
+  color: var(--text-muted);
+}
