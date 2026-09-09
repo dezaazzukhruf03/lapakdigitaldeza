@@ -81,7 +81,20 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.3px;
   margin-top: 5px;
-  margin-left: -29px; /* Menggeser ke kiri melewati area logo-icon */
+  margin-left: -26px; /* Menggeser ke kiri melewati area logo-icon */
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  height: 28px;
+  width: 28px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .nav-links {
@@ -474,13 +487,13 @@ body {
   }
 
   .card-actions-top {
-    flex-direction: column;
-    gap: 4px;
+    flex-direction: row;
+    gap: 5px;
   }
 
   .btn-action {
-    padding: 5px;
-    font-size: 0.58rem;
+    padding: 7px 4px;
+    font-size: 0.68rem;
   }
 }
 
@@ -1070,7 +1083,6 @@ body {
   cursor: pointer;
   font-size: 0.95rem;
   flex-shrink: 0;
-  margin-left: 10px;
   transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
 }
 
