@@ -66,15 +66,15 @@ function renderTemplates(data) {
 
                     <div class="card-actions-top">
                         <a href="${item.previewUrl}" target="_blank" class="btn-action btn-preview" onclick="trackTemplateEvent('preview_template', '${item.id}', '${item.title}')">
-                            <i class="fa-solid fa-eye"></i> Lihat Tema
+                            <i class="fa-solid fa-eye"></i> Demo
                         </a>
                         <button type="button" class="btn-action btn-preview" onclick="openDemoModal('${item.id}')">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i> Kustom Nama Tamu
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Kustom
                         </button>
                     </div>
 
                     <a href="pesan.html?template=${item.id}" class="btn-action btn-order-full" onclick="trackTemplateEvent('open_order_form', '${item.id}', '${item.title}')">
-                        <i class="fa-solid fa-cart-shopping"></i> Pesan Tema
+                        <i class="fa-solid fa-cart-shopping"></i> Pesan
                     </a>
                 </div>
             </div>

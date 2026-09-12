@@ -1,1102 +1,258 @@
-:root {
-  --primary-color: #2563eb;
-  --primary-hover: #1d4ed8;
-  --bg-color: #f8fafc;
-  --card-bg: #ffffff;
-  --text-dark: #1e293b;
-  --text-muted: #64748b;
-  --border-color: #e2e8f0;
-}
-
-[data-theme="dark"] {
-  --primary-color: #2563eb;
-  --primary-hover: #60a5fa;
-  --bg-color: #0f172a;
-  --card-bg: #1e293b;
-  --text-dark: #f1f5f9;
-  --text-muted: #f1f5f9;
-  --border-color: #334155;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background-color: var(--bg-color);
-  color: var(--text-dark);
-}
-
-/* NAVBAR */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 5%;
-  background: #ffffff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.logo-brand {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  font-weight: 700;
-  font-size: 1.5rem;
-  color: var(--primary-color);
-}
-
-.navbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logo-icon {
-  height: 28px;
-  width: 28px;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-.nav-links {
-  display: flex;
-  gap: 20px;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: var(--text-muted);
-  font-weight: 500;
-}
-
-.nav-links a.active, .nav-links a:hover {
-  color: var(--primary-color);
-}
-
-.btn-contact {
-  background: #25d366;
-  color: white;
-  text-decoration: none;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  white-space: nowrap;
-}
-
-.btn-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: #ffffff;
-  color: var(--primary-color);
-  border: 1.5px solid var(--primary-color);
-  text-decoration: none;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  white-space: nowrap;
-  transition: background 0.15s;
-}
-
-.btn-back:hover {
-  background: #eff6ff;
-}
-
-.btn-whatsapp {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #25d366;
-  color: white;
-  text-decoration: none;
-  padding: 12px 24px;
-  border-radius: 20px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  border: none;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.btn-whatsapp:hover {
-  background: #1ebe5d;
-}
-
-.btn-contact-mobile {
-  display: none;
-}
-
-.nav-toggle {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 1.3rem;
-  color: var(--text-dark);
-  cursor: pointer;
-  padding: 6px;
-}
-
-@media (max-width: 768px) {
-  .nav-links {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: #ffffff;
-    flex-direction: column;
-    padding: 15px 5%;
-    gap: 14px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-  }
-
-  .nav-links.open {
-    display: flex;
-  }
-
-  .btn-contact-desktop {
-    display: none;
-  }
-
-  .btn-contact-mobile {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: fit-content;
-  }
-
-  .nav-toggle {
-    display: inline-block;
-  }
-}
-
-/* HERO & SEARCH */
-.hero {
-  text-align: center;
-  padding: 40px 20px 20px 20px;
-}
-
-.hero-title-only {
-  padding-bottom: 10px;
-}
-
-.hero-search-only {
-  padding-top: 10px;
-}
-
-.hero h1 {
-  font-size: 2rem;
-  color: var(--text-dark);
-  margin-bottom: 10px;
-}
-
-.hero p {
-  color: var(--text-muted);
-  max-width: 600px;
-  margin: 0 auto 20px auto;
-}
-
-.search-container {
-  position: relative;
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.search-icon {
-  position: absolute;
-  left: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-muted);
-}
-
-.search-container input {
-  width: 100%;
-  padding: 12px 15px 12px 42px;
-  border: 1px solid var(--border-color);
-  border-radius: 25px;
-  outline: none;
-  font-size: 0.95rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-}
-
-.search-container input:focus {
-  border-color: var(--primary-color);
-}
-
-/* SEKSI FITUR LENGKAP */
-.features-section {
-  max-width: 1100px;
-  margin: 40px auto 10px auto;
-  padding: 0 20px;
-}
-
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-  gap: 12px;
-}
-
-.feature-item {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 16px 10px;
-  text-align: center;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.feature-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-}
-
-.feature-icon {
-  width: 38px;
-  height: 38px;
-  margin: 0 auto 8px auto;
-  border-radius: 50%;
-  background: #eff6ff;
-  color: var(--primary-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.95rem;
-}
-
-.feature-item span {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--text-dark);
-  line-height: 1.3;
-}
-
-/* MOBILE: kartu fitur lebih kecil, 4 kolom sejajar */
-@media (max-width: 600px) {
-  .features-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
-  }
-
-  .feature-item {
-    padding: 8px 4px;
-    border-radius: 8px;
-  }
-
-  .feature-icon {
-    width: 26px;
-    height: 26px;
-    margin: 0 auto 5px auto;
-    font-size: 0.7rem;
-  }
-
-  .feature-item span {
-    font-size: 0.55rem;
-    line-height: 1.15;
-  }
-}
-
-/* SEKSI CARA ORDER */
-.how-to-section {
-  max-width: 760px;
-  margin: 20px auto 60px auto;
-  padding: 0 20px;
-}
-
-.how-to-steps {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.how-to-step {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-}
-
-.how-to-number {
-  flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--primary-color);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-
-.how-to-content h3 {
-  font-size: 1.05rem;
-  color: var(--text-dark);
-  margin-bottom: 4px;
-}
-
-.how-to-content p {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-}
-
-.how-to-cta {
-  text-align: center;
-  margin-top: 30px;
-}
-
-/* MAIN CONTAINER & CATEGORY BAR */
-.main-container {
-  max-width: 1400px;
-  margin: 20px auto 60px auto;
-  padding: 0 20px;
-}
-
-.category-bar {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
-}
-
-.cat-btn {
-  background: #ffffff;
-  border: 1px solid var(--border-color);
-  padding: 8px 18px;
-  border-radius: 30px;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.2s;
-}
-
-.cat-btn.active, .cat-btn:hover {
-  background: var(--primary-color);
-  color: #ffffff;
-  border-color: var(--primary-color);
-}
-
-/* TEMPLATE GRID */
-.template-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 18px;
-}
-
-/* MOBILE: 3 kartu sejajar, elemen diperkecil lagi supaya tetap muat & terbaca */
-@media (max-width: 600px) {
-  .template-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-  }
-
-  .card-preview {
-    height: 140px;
-  }
-
-  .phone-mockup-real {
-    width: 65px;
-    height: 115px;
-    padding: 3px;
-    border-radius: 12px;
-  }
-
-  .phone-notch {
-    width: 22px;
-    height: 7px;
-    top: 3px;
-    border-radius: 0 0 6px 6px;
-  }
-
-  .mock-tag {
-    font-size: 5.5px;
-    padding: 1px 4px;
-    margin-bottom: 2px;
-  }
-
-  .phone-screen-fallback h4 { font-size: 6.5px; }
-  .phone-screen-fallback p { font-size: 5px; margin-top: 1px; }
-
-  .card-badge {
-    top: 5px;
-    right: 5px;
-    font-size: 0.5rem;
-    padding: 1px 5px;
-  }
-
-  .card-info {
-    padding: 7px;
-  }
-
-  .card-info h3 {
-    font-size: 0.65rem;
-    margin-bottom: 2px;
-    line-height: 1.2;
-  }
-
-  .price-tag {
-    font-size: 0.62rem;
-    margin-bottom: 6px;
-  }
-
-  .card-actions-top {
-    flex-direction: row;
-    gap: 5px;
-  }
-
-  .btn-action {
-    padding: 7px 4px;
-    font-size: 0.68rem;
-  }
-}
-
-.card {
-  background: var(--card-bg);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-  border: 1px solid var(--border-color);
-  transition: transform 0.2s;
-  position: relative;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-}
-
-/* BADGE STATUS */
-.card-badge {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: #ef4444;
-  color: white;
-  font-size: 0.7rem;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 20px;
-  z-index: 10;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-
-/* MOCKUP HP CSS MURNI */
-.card-preview {
-  height: 250px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #f1f5f9;
-}
-
-.theme-softred { background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%); }
-.theme-darkjava { background: linear-gradient(135deg, #2c3e50 0%, #000000 100%); }
-.theme-gold { background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); }
-
-/* BINGKAI HP REALISTIS — dipakai selalu, baik isinya foto asli maupun teks placeholder */
-.phone-mockup-real {
-  position: relative;
-  width: 120px;
-  height: 215px;
-  background: #111827;
-  border-radius: 18px;
-  padding: 5px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-}
-
-.phone-notch {
-  position: absolute;
-  top: 5px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 42px;
-  height: 12px;
-  background: #111827;
-  border-radius: 0 0 8px 8px;
-  z-index: 2;
-}
-
-/* ISI: SCREENSHOT ASLI (kalau preview_image_url sudah diisi) */
-.phone-screenshot {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  border-radius: 14px;
-  display: block;
-}
-
-/* ISI: TEKS PLACEHOLDER (fallback selama belum ada screenshot) */
-.phone-screen-fallback {
-  width: 100%;
-  height: 100%;
-  border-radius: 14px;
-  background: #f1f5f9;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 10px;
-}
-
-.mock-tag {
-  font-size: 9px;
-  background: var(--primary-color);
-  color: white;
-  padding: 2px 6px;
-  border-radius: 4px;
-  margin-bottom: 6px;
-}
-
-.phone-screen-fallback h4 {
-  font-size: 12px;
-  color: #333;
-  font-weight: 600;
-}
-
-.phone-screen-fallback p {
-  font-size: 9px;
-  color: #666;
-  margin-top: 4px;
-}
-
-/* CARD BODY & BUTTONS */
-.card-info {
-  padding: 14px;
-}
-
-.card-info h3 {
-  font-size: 0.95rem;
-  margin-bottom: 4px;
-}
-
-.price-tag {
-  font-weight: 700;
-  color: var(--primary-color);
-  display: block;
-  margin-bottom: 12px;
-  font-size: 0.9rem;
-}
-
-.card-actions-top {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-.btn-action {
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  border: none;
-}
-
-.btn-preview {
-  flex: 1;
-  background: #f1f5f9;
-  color: var(--text-dark);
-}
-
-.btn-use {
-  flex: 1;
-  background: var(--primary-color);
-  color: white;
-}
-
-.btn-order-full {
-  width: 100%;
-  background: var(--primary-color);
-  color: white;
-}
-
-.btn-order-full:hover {
-  background: var(--primary-hover);
-}
-
-.no-results {
-  text-align: center;
-  padding: 50px;
-  color: var(--text-muted);
-  font-size: 1.2rem;
-}
-
-.loading-text {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 50px;
-  color: var(--text-muted);
-  font-size: 1rem;
-}
-
-/* TESTIMONI */
-.reviews-section {
-  max-width: 1100px;
-  margin: 60px auto 40px auto;
-  padding: 0 20px;
-}
-
-.section-title {
-  text-align: center;
-  margin-bottom: 35px;
-}
-
-.section-title h2 {
-  font-size: 1.8rem;
-  color: var(--text-dark);
-  margin-top: 4px;
-}
-
-.section-desc {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  margin-top: 6px;
-}
-
-.reviews-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-}
-
-.review-card {
-  background: #ffffff;
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.review-stars {
-  color: #f59e0b;
-  font-size: 0.85rem;
-  margin-bottom: 12px;
-}
-
-.review-text {
-  font-size: 0.9rem;
-  color: #334155;
-  line-height: 1.5;
-  font-style: italic;
-  margin-bottom: 20px;
-}
-
-.review-user {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.user-avatar {
-  width: 40px;
-  height: 40px;
-  background: var(--primary-color);
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 0.8rem;
-}
-
-.user-info h4 {
-  font-size: 0.9rem;
-  color: var(--text-dark);
-}
-
-.user-info span {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-/* FAQ SECTION */
-.faq-section {
-  max-width: 800px;
-  margin: 40px auto 80px auto;
-  padding: 0 20px;
-}
-
-.faq-container {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.faq-item {
-  background: white;
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 16px 20px;
-  cursor: pointer;
-}
-
-.faq-item summary {
-  font-weight: 600;
-  color: var(--text-dark);
-  outline: none;
-}
-
-.faq-item p {
-  margin-top: 10px;
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-}
-
-/* MODAL / POPUP */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-box {
-  background: white;
-  width: 90%;
-  max-width: 480px;
-  max-height: 88vh;
-  overflow-y: auto;
-  border-radius: 16px;
-  padding: 25px;
-  position: relative;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-}
-
-.modal-close {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: 24px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #94a3b8;
-}
-
-.modal-header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.modal-subtext {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-top: 8px;
-  line-height: 1.5;
-}
-
-.subtitle {
-  color: var(--primary-color);
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-.form-group label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 6px;
-  font-size: 0.9rem;
-}
-
-.form-group input, .form-group select {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  outline: none;
-}
-
-.btn-primary {
-  width: 100%;
-  padding: 12px;
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.result-box {
-  margin-top: 20px;
-  padding-top: 15px;
-  border-top: 1px solid var(--border-color);
-}
-
-.result-box h3 {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-}
-
-#resultUrl {
-  background: #f1f5f9;
-  padding: 10px;
-  border-radius: 6px;
-  word-break: break-all;
-  font-size: 0.85rem;
-  margin: 8px 0;
-}
-
-.message-preview {
-  background: #f1f5f9;
-  padding: 12px;
-  border-radius: 6px;
-  color: #374151;
-  white-space: pre-line;
-  line-height: 1.5;
-  font-size: 0.8rem;
-  margin: 8px 0 10px 0;
-}
-
-.save-status {
-  font-size: 12px;
-  color: #16a34a;
-  margin-bottom: 8px;
-}
-
-.save-status.save-status-error {
-  color: #dc2626;
-}
-
-/* Honeypot: tersembunyi dari manusia, tetap ada di DOM untuk bot */
-.hp-field {
-  position: absolute;
-  left: -9999px;
-  top: -9999px;
-  height: 0;
-  overflow: hidden;
-}
-
-.action-buttons {
-  display: flex;
-  gap: 8px;
-}
-
-.btn-secondary {
-  flex: 1;
-  padding: 8px;
-  background: white;
-  border: 1px solid var(--primary-color);
-  color: var(--primary-color);
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.btn-reset {
-  width: 100%;
-  margin-top: 8px;
-  background: none;
-  border: none;
-  color: #ef4444;
-  font-size: 0.8rem;
-  cursor: pointer;
-}
-
-/* TOAST NOTIFICATION */
-.toast {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%) translateY(100px);
-  background: #1e293b;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 30px;
-  font-size: 0.85rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  transition: transform 0.3s ease;
-  z-index: 2000;
-}
-
-.toast.show {
-  transform: translateX(-50%) translateY(0);
-}
-
-.site-footer {
-  text-align: center;
-  padding: 20px;
-  color: var(--text-muted);
-  font-size: 0.85rem;
-}
-
-/* =========================================================
-   MODE GELAP — override untuk elemen yang warnanya hardcode
-   (elemen yang sudah pakai var(--bg-color) dkk otomatis ikut
-   berubah sendiri tanpa perlu ditulis di sini)
-========================================================= */
-
-[data-theme="dark"] body {
-  background-color: var(--bg-color);
-  color: var(--text-dark);
-}
-
-[data-theme="dark"] .btn-preview {
-  background: rgba(37, 99, 235, 0.12);
-  color: #ffffff;
-}
-
-[data-theme="dark"] .navbar,
-[data-theme="dark"] .nav-links,
-[data-theme="dark"] .cat-btn,
-[data-theme="dark"] .review-card,
-[data-theme="dark"] .faq-item,
-[data-theme="dark"] .modal-box,
-[data-theme="dark"] .btn-secondary,
-[data-theme="dark"] .btn-back {
-  background-color: var(--card-bg);
-  color: var(--text-dark);
-  border-color: var(--border-color);
-}
-
-[data-theme="dark"] .cat-btn.active,
-[data-theme="dark"] .cat-btn:hover {
-  background-color: var(--primary-color);
-  color: #ffffff;
-}
-
-[data-theme="dark"] .search-container input,
-[data-theme="dark"] .form-group input,
-[data-theme="dark"] .form-group select,
-[data-theme="dark"] .form-group textarea {
-  background-color: var(--card-bg);
-  color: var(--text-dark);
-  border-color: var(--border-color);
-}
-
-[data-theme="dark"] .review-text {
-  color: var(--text-dark);
-}
-
-[data-theme="dark"] .faq-item p {
-  color: var(--text-muted);
-}
-
-[data-theme="dark"] .feature-item,
-[data-theme="dark"] .state-box,
-[data-theme="dark"] .package-card,
-[data-theme="dark"] .referral-section,
-[data-theme="dark"] .form-section {
-  background-color: var(--card-bg);
-  border-color: var(--border-color);
-}
-
-[data-theme="dark"] .package-card.selected {
-  background-color: rgba(59, 130, 246, 0.12);
-}
-
-[data-theme="dark"] #resultUrl,
-[data-theme="dark"] .message-preview,
-[data-theme="dark"] .loading-text,
-[data-theme="dark"] .history-item {
-  background-color: var(--bg-color);
-  color: var(--text-dark);
-}
-
-[data-theme="dark"] .card-preview.has-photo,
-[data-theme="dark"] .card-preview {
-  background-color: #0b1220;
-}
-
-/* TOMBOL GANTI TEMA */
-.theme-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 1px solid var(--border-color);
-  background: var(--card-bg);
-  color: var(--text-dark);
-  cursor: pointer;
-  font-size: 0.95rem;
-  flex-shrink: 0;
-  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
-}
-
-.theme-toggle:hover {
-  background: var(--bg-color);
-  transform: scale(1.08);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-}
-
-.theme-toggle:active {
-  transform: scale(0.92);
-}
-
-.theme-toggle i {
-  transition: transform 0.4s ease;
-}
-
-.theme-toggle.spin i {
-  transform: rotate(360deg);
-}
-
-.theme-toggle .fa-sun {
-  color: #ffffff;
-}
-
-.theme-toggle .fa-moon {
-  color: #000000;
-}
-
-/* FIX: Chrome/Edge autofill memaksa background putih pada input yang
-   pernah diisi/diingat browser, walau CSS sudah diatur gelap.
-   Trik ini "menipu" browser pakai box-shadow raksasa di dalam supaya
-   tetap ikut warna gelap kita. */
-[data-theme="dark"] input:-webkit-autofill,
-[data-theme="dark"] input:-webkit-autofill:hover,
-[data-theme="dark"] input:-webkit-autofill:focus,
-[data-theme="dark"] input:-webkit-autofill:active,
-[data-theme="dark"] select:-webkit-autofill,
-[data-theme="dark"] textarea:-webkit-autofill {
-  -webkit-text-fill-color: var(--text-dark) !important;
-  -webkit-box-shadow: 0 0 0px 1000px var(--card-bg) inset !important;
-  box-shadow: 0 0 0px 1000px var(--card-bg) inset !important;
-  transition: background-color 5000s ease-in-out 0s;
-  caret-color: var(--text-dark);
-}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="theme.js"></script>
+  <title>Pesan Tema - Deza Digital Kreasi</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="order-form.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- GOOGLE ANALYTICS 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZMEMP5WQY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FZMEMP5WQY');
+  </script>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo-brand">
+      <img src="logo.png" alt="Deza Digital Kreasi" class="logo-icon">
+      <div class="logo-text">
+        <span class="logo-title">EDIKASI</span>
+        <span class="logo-subtitle">Deza Digital Kreasi</span>
+      </div>
+    </div>
+    <div class="navbar-actions">
+      <a href="index.html" class="btn-back">
+        <i class="fa-solid fa-arrow-left"></i> Ke Katalog
+      </a>
+      <button class="theme-toggle" aria-label="Ganti mode gelap/terang">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </div>
+  </header>
+
+  <main class="order-form-page">
+
+    <!-- STATE: LOADING -->
+    <div id="stateLoading" class="state-box">
+      <i class="fa-solid fa-spinner fa-spin"></i>
+      <p>Memuat data tema...</p>
+    </div>
+
+    <!-- STATE: TEMPLATE TIDAK DITEMUKAN -->
+    <div id="stateNotFound" class="state-box" style="display:none;">
+      <i class="fa-solid fa-circle-exclamation"></i>
+      <h2>Tema tidak ditemukan</h2>
+      <p>Sepertinya link ini tidak valid. Silakan kembali ke katalog dan pilih tema lagi.</p>
+      <a href="index.html" class="btn-primary">
+        <i class="fa-solid fa-arrow-left"></i> Kembali ke Katalog
+      </a>
+    </div>
+
+    <!-- STATE: BERHASIL SUBMIT -->
+    <div id="stateSuccess" class="state-box" style="display:none;">
+      <i class="fa-solid fa-circle-check"></i>
+      <h2>Terima kasih! Pesanan Anda diterima.</h2>
+      <p>Kode Pesanan Anda: <strong id="successOrderCode"></strong></p>
+      <p>Admin akan segera menghubungi Anda lewat WhatsApp untuk konfirmasi pembayaran. Simpan kode pesanan di atas sebagai referensi.</p>
+      <a href="https://wa.me/6283180009427" target="_blank" class="btn-whatsapp">
+        <i class="fa-brands fa-whatsapp"></i> Chat Admin Sekarang
+      </a>
+    </div>
+
+    <!-- STATE: FORM -->
+    <form id="orderForm" class="order-form" style="display:none;">
+
+      <div class="form-intro">
+        <p class="subtitle">Deza Digital Kreasi</p>
+        <h1>Form Pesan Tema Undangan Digital</h1>
+        <p>Assalamu'alaikum Wr. Wb. Silakan lengkapi data berikut untuk memesan tema yang Anda pilih. Setelah submit, Admin kami akan menghubungi Anda untuk konfirmasi pembayaran.</p>
+      </div>
+
+      <!-- Honeypot anti-bot -->
+      <div class="hp-field" aria-hidden="true">
+        <label for="hp_field">Jangan diisi</label>
+        <input type="text" id="hp_field" name="hp_field" tabindex="-1" autocomplete="off">
+      </div>
+
+      <section class="form-section">
+        <h2><i class="fa-solid fa-tag"></i> Tema Dipilih</h2>
+        <div class="form-group">
+          <label>Kode Desain / Template</label>
+          <input type="text" id="templateTitleDisplay" readonly>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2><i class="fa-solid fa-layer-group"></i> Pilih Paket</h2>
+        <div id="packageOptions" class="package-options">
+          <p class="loading-text">Memuat pilihan paket...</p>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2><i class="fa-solid fa-user"></i> Data Pemesan</h2>
+        <div class="form-group">
+          <label for="customerName">Nama Pemesan</label>
+          <input type="text" id="customerName" required maxlength="100">
+        </div>
+        <div class="form-group">
+          <label for="customerPhone">Nomor WhatsApp Aktif</label>
+          <input type="tel" id="customerPhone" placeholder="08xxxxxxxxxx" required maxlength="20">
+        </div>
+        <div class="form-group">
+          <label for="customerEmail">Email (opsional)</label>
+          <input type="email" id="customerEmail" maxlength="100">
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2><i class="fa-solid fa-users"></i> Data Mempelai</h2>
+        <div class="form-group">
+          <label for="mempelaiSelect">Isi data siapa dulu?</label>
+          <select id="mempelaiSelect">
+            <option value="pria">Mempelai Pria</option>
+            <option value="wanita">Mempelai Wanita</option>
+          </select>
+          <p class="section-hint">💡 Pilihan ini menentukan urutan nama di undangan, misalnya "Pria & Wanita" atau "Wanita & Pria".</p>
+        </div>
+
+        <h3 class="mempelai-subtitle"><i class="fa-solid fa-user"></i> Mempelai Pria</h3>
+        <div class="form-group">
+          <label for="groomFullName">Nama Lengkap & Gelar</label>
+          <input type="text" id="groomFullName" required maxlength="100">
+        </div>
+        <div class="form-group">
+          <label for="groomNickname">Nama Panggilan</label>
+          <input type="text" id="groomNickname" required maxlength="50">
+        </div>
+        <div class="form-group">
+          <label for="groomFatherName">Nama Ayah</label>
+          <input type="text" id="groomFatherName" maxlength="100">
+        </div>
+        <div class="form-group">
+          <label for="groomMotherName">Nama Ibu</label>
+          <input type="text" id="groomMotherName" maxlength="100">
+        </div>
+
+        <h3 class="mempelai-subtitle"><i class="fa-solid fa-user"></i> Mempelai Wanita</h3>
+        <div class="form-group">
+          <label for="brideFullName">Nama Lengkap & Gelar</label>
+          <input type="text" id="brideFullName" required maxlength="100">
+        </div>
+        <div class="form-group">
+          <label for="brideNickname">Nama Panggilan</label>
+          <input type="text" id="brideNickname" required maxlength="50">
+        </div>
+        <div class="form-group">
+          <label for="brideFatherName">Nama Ayah</label>
+          <input type="text" id="brideFatherName" maxlength="100">
+        </div>
+        <div class="form-group">
+          <label for="brideMotherName">Nama Ibu</label>
+          <input type="text" id="brideMotherName" maxlength="100">
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2><i class="fa-solid fa-calendar-days"></i> Data Acara — Akad Nikah</h2>
+        <div class="form-group">
+          <label for="akadDatetime">Hari, Tanggal & Jam</label>
+          <input type="text" id="akadDatetime" placeholder="Contoh: Sabtu, 24 Oktober 2026, 08.00 WIB" required maxlength="150">
+        </div>
+        <div class="form-group">
+          <label for="akadAddress">Alamat Lengkap</label>
+          <textarea id="akadAddress" rows="2" required maxlength="300"></textarea>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2><i class="fa-solid fa-calendar-days"></i> Data Acara — Resepsi</h2>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="resepsiSameAsAkad">
+          Sama dengan Akad
+        </label>
+        <div id="resepsiFields">
+          <div class="form-group">
+            <label for="resepsiDatetime">Hari, Tanggal & Jam</label>
+            <input type="text" id="resepsiDatetime" placeholder="Contoh: Sabtu, 24 Oktober 2026, 11.00 WIB" maxlength="150">
+          </div>
+          <div class="form-group">
+            <label for="resepsiAddress">Alamat Lengkap</label>
+            <textarea id="resepsiAddress" rows="2" maxlength="300"></textarea>
+          </div>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2><i class="fa-solid fa-location-dot"></i> Lokasi Acara</h2>
+        <div class="form-group">
+          <label for="mapsLink">Link Google Maps</label>
+          <input type="url" id="mapsLink" placeholder="https://maps.app.goo.gl/..." maxlength="300">
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2><i class="fa-solid fa-music"></i> Musik / Backsound</h2>
+        <label class="radio-inline">
+          <input type="radio" name="musicChoice" value="bawaan" checked>
+          Gunakan musik bawaan template
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="musicChoice" value="custom">
+          Request judul lagu & penyanyi
+        </label>
+        <div class="form-group" id="musicCustomField" style="display:none;">
+          <label for="musicCustomInput">Judul Lagu & Penyanyi</label>
+          <input type="text" id="musicCustomInput" maxlength="150">
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2><i class="fa-solid fa-gift"></i> Hadiah Digital (Opsional)</h2>
+        <p class="section-hint">Bisa isi lebih dari satu rekening/e-wallet. Kosongkan kalau tidak perlu.</p>
+        <div id="giftAccountsList"></div>
+        <button type="button" id="addGiftAccountBtn" class="btn-add-row">
+          <i class="fa-solid fa-plus"></i> Tambah Rekening
+        </button>
+      </section>
+
+      <section class="form-section">
+        <h2><i class="fa-solid fa-note-sticky"></i> Catatan Tambahan</h2>
+        <div class="form-group">
+          <textarea id="notes" rows="3" maxlength="500" placeholder="Opsional, kalau ada permintaan khusus lainnya"></textarea>
+        </div>
+      </section>
+
+      <div class="policy-note">
+        <p><i class="fa-solid fa-circle-info"></i> Setelah submit, Admin akan menghubungi Anda via WhatsApp untuk konfirmasi pembayaran. Kami memberikan maksimal 3 kali revisi gratis untuk perubahan data. Estimasi waktu pengerjaan minimal 2×24 jam setelah pembayaran diterima.</p>
+      </div>
+
+      <button type="submit" id="submitBtn" class="btn-primary btn-submit">
+        Pesan Tema Ini
+      </button>
+      <p id="formError" class="form-error" style="display:none;"></p>
+
+    </form>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Deza Digital Kreasi. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="pesan.js"></script>
+</body>
+</html>

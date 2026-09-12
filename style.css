@@ -56,12 +56,18 @@ body {
   color: var(--primary-color);
 }
 
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .logo-icon {
   height: 30px;
   width: 30px;
   object-fit: contain;
   flex-shrink: 0;
-  transform: translateY(-8px); /* Geser logo ke atas sebesar 4px */
+  transform: translateY(-8px);
 }
 
 .logo-text {
@@ -81,20 +87,7 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.3px;
   margin-top: 5px;
-  margin-left: -26px; /* Menggeser ke kiri melewati area logo-icon */
-}
-
-.navbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logo-icon {
-  height: 28px;
-  width: 28px;
-  object-fit: contain;
-  flex-shrink: 0;
+  margin-left: -29px;
 }
 
 .nav-links {
