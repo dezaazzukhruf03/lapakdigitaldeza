@@ -65,11 +65,11 @@ function renderTemplates(data) {
                     <span class="price-tag">Mulai dari ${item.price}</span>
 
                     <div class="card-actions-top">
-                        <a href="${item.previewUrl}" target="_blank" class="btn-action btn-preview" onclick="trackTemplateEvent('preview_template', '${item.id}', '${item.title}')">
-                            <i class="fa-solid fa-eye"></i> Demo
+                        <a href="${item.previewUrl}" target="_blank" class="btn-action btn-preview" title="Lihat Tema" onclick="trackTemplateEvent('preview_template', '${item.id}', '${item.title}')">
+                            <i class="fa-solid fa-eye"></i> <span class="btn-label">Demo</span>
                         </a>
-                        <button type="button" class="btn-action btn-preview" onclick="openDemoModal('${item.id}')">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i> Kustom
+                        <button type="button" class="btn-action btn-preview" title="Kustom Nama Tamu" onclick="openDemoModal('${item.id}')">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> <span class="btn-label">Kustom</span>
                         </button>
                     </div>
 
