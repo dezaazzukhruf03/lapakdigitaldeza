@@ -307,6 +307,13 @@
   margin-top: 10px;
 }
 
+.success-status-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
 /* DARK MODE */
 [data-theme="dark"] .form-section input[readonly] {
   background: var(--card-bg);

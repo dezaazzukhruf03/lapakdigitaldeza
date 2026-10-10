@@ -73,7 +73,7 @@ function renderTemplates(data) {
                         </button>
                     </div>
 
-                    <a href="pesan.html?template=${item.id}" class="btn-action btn-order-full" onclick="trackTemplateEvent('open_order_form', '${item.id}', '${item.title}')">
+                    <a href="pesan.html?template=${encodeURIComponent(item.id)}" class="btn-action btn-order-full" onclick="trackTemplateEvent('open_order_form', '${item.id}', '${item.title}')">
                         <i class="fa-solid fa-cart-shopping"></i> Pesan
                     </a>
                 </div>

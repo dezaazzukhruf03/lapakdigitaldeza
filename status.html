@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cek Status Pesanan - Deza Digital Kreasi</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="order-form.css">
+  <link rel="stylesheet" href="status.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZMEMP5WQY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FZMEMP5WQY');
+  </script>
+  <script src="theme.js"></script>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo-brand">
+      <img src="logo.png" alt="Deza Digital Kreasi" class="logo-icon">
+      <div class="logo-text">
+        <span class="logo-title">EDIKASI</span>
+        <span class="logo-subtitle">Deza Digital Kreasi</span>
+      </div>
+    </div>
+    <div class="navbar-actions">
+      <a href="index.html" class="btn-back">
+        <i class="fa-solid fa-arrow-left"></i> Ke Katalog
+      </a>
+      <button class="theme-toggle" aria-label="Ganti mode gelap/terang">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </div>
+  </header>
+
+  <main class="order-form-page">
+
+    <!-- STATE: LOOKUP (default, tanpa kode) -->
+    <div id="stateLookup" class="state-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <h2>Cek Status Pesanan Anda</h2>
+      <p>Masukkan Kode Pesanan untuk melihat sudah sampai mana proses undangan Anda.</p>
+
+      <div class="lookup-form">
+        <input type="text" id="lookupCodeInput" placeholder="Masukkan Kode Pesanan Anda">
+        <button type="button" id="lookupBtn" class="btn-primary">Cek Status</button>
+      </div>
+
+      <p class="lookup-hint">Belum tahu Kode Pesanan Anda?</p>
+      <a href="https://wa.me/6283180009427" target="_blank" class="btn-whatsapp btn-whatsapp-full">
+        <i class="fa-brands fa-whatsapp"></i> Hubungi Admin
+      </a>
+    </div>
+
+    <!-- STATE: LOADING -->
+    <div id="stateLoading" class="state-box" style="display:none;">
+      <i class="fa-solid fa-spinner fa-spin"></i>
+      <p>Memuat status pesanan...</p>
+    </div>
+
+    <!-- STATE: TIDAK DITEMUKAN -->
+    <div id="stateNotFound" class="state-box" style="display:none;">
+      <i class="fa-solid fa-circle-exclamation"></i>
+      <h2>Kode Pesanan Tidak Ditemukan</h2>
+      <p>Coba periksa kembali kode Anda, atau hubungi Admin kalau masih bermasalah.</p>
+      <a href="https://wa.me/6283180009427" target="_blank" class="btn-whatsapp">
+        <i class="fa-brands fa-whatsapp"></i> Hubungi Admin
+      </a>
+      <br><br>
+      <a href="status.html" class="btn-secondary" style="display:inline-block; width:auto; padding:10px 20px; text-decoration:none;">Coba Lagi</a>
+    </div>
+
+    <!-- STATE: HASIL STATUS -->
+    <div id="stateResult" style="display:none;">
+
+      <div class="status-card">
+        <p class="subtitle">Kode Pesanan</p>
+        <h1 id="orderCodeDisplay">-</h1>
+
+        <div class="status-stepper" id="statusStepper">
+          <div class="status-step" data-status="menunggu_pembayaran">
+            <div class="status-step-icon"><i class="fa-solid fa-clock"></i></div>
+            <span>Menunggu Pembayaran</span>
+          </div>
+          <div class="status-step" data-status="dibayar">
+            <div class="status-step-icon"><i class="fa-solid fa-money-check-dollar"></i></div>
+            <span>Dibayar</span>
+          </div>
+          <div class="status-step" data-status="data_lengkap">
+            <div class="status-step-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+            <span>Data Lengkap</span>
+          </div>
+          <div class="status-step" data-status="diproses">
+            <div class="status-step-icon"><i class="fa-solid fa-gears"></i></div>
+            <span>Diproses</span>
+          </div>
+          <div class="status-step" data-status="selesai">
+            <div class="status-step-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <span>Selesai</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="referral-section">
+        <h2><i class="fa-solid fa-receipt"></i> Detail Pesanan</h2>
+        <div class="detail-row">
+          <span>Nama Pemesan</span>
+          <strong id="detailCustomerName">-</strong>
+        </div>
+        <div class="detail-row">
+          <span>Tema</span>
+          <strong id="detailTemplate">-</strong>
+        </div>
+        <div class="detail-row">
+          <span>Paket</span>
+          <strong id="detailPackage">-</strong>
+        </div>
+        <div class="detail-row">
+          <span>Total Harga</span>
+          <strong id="detailPrice">-</strong>
+        </div>
+        <div class="detail-row">
+          <span>Tanggal Pesan</span>
+          <strong id="detailDate">-</strong>
+        </div>
+      </div>
+
+      <div id="finalSiteBox" class="final-site-box" style="display:none;">
+        <p><i class="fa-solid fa-circle-check"></i> Undangan Anda sudah jadi!</p>
+        <a id="finalSiteLink" href="#" target="_blank" class="btn-whatsapp">
+          <i class="fa-solid fa-eye"></i> Buka Undangan Saya
+        </a>
+      </div>
+
+      <div class="status-cta">
+        <a href="https://wa.me/6283180009427" target="_blank" class="btn-whatsapp">
+          <i class="fa-brands fa-whatsapp"></i> Ada Pertanyaan? Hubungi Admin
+        </a>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Deza Digital Kreasi. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="status.js"></script>
+</body>
+</html>

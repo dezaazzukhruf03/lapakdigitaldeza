@@ -286,5 +286,6 @@ orderForm.addEventListener("submit", async function (e) {
     }
 
     document.getElementById("successOrderCode").textContent = newOrderCode;
+    document.getElementById("successStatusLink").href = `status.html?kode=${encodeURIComponent(newOrderCode)}`;
     showState(stateSuccess);
 });
