@@ -52,6 +52,7 @@ Dengan memohon rahmat dan ridha Allah SWT, kami bermaksud mengundang Bapak/Ibu/S
 
 Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir di hari istimewa kami.
 Untuk informasi lengkap mengenai lokasi dan rangkaian acara, silahkan kunjungi tautan berikut:
+
 🔗 ${url}
 
 Saran: Buka tautan menggunakan Google Chrome untuk pengalaman visual terbaik.
