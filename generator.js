@@ -46,16 +46,17 @@ Bapak/Ibu/Saudara/i
 
 Assalamu'alaikum Warahmatullahi Wabarakatuh
 
-Tanpa mengurangi rasa hormat, melalui pesan ini kami ingin membagikan kabar bahagia sekaligus mengundang Bapak/Ibu/Saudara/i untuk menjadi bagian dari momen berharga pernikahan kami:
+Dengan memohon rahmat dan ridha Allah SWT, kami bermaksud mengundang Bapak/Ibu/Saudara/i dan memberikan doa restu pada acara pernikahan kami:
 
 ✨ *${coupleName}* ✨
 
-Silakan klik tautan di bawah ini untuk melihat detail lokasi dan rangkaian acara:
+Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir di hari istimewa kami.
+Untuk informasi lengkap mengenai lokasi dan rangkaian acara, silahkan kunjungi tautan berikut:
 🔗 ${url}
 
-NB: Buka menggunakan Google Chrome untuk pengalaman visual terbaik.
+Saran: Buka tautan menggunakan Google Chrome untuk pengalaman visual terbaik.
 
-Ungkapan terima kasih yang tulus kami sampaikan atas doa restu dan kehadiran Bapak/Ibu/Saudara/i sekalian.
+Doa restu dan kehadiran Bapak/Ibu/Saudara/i merupakan kebahagiaan yang sangat berarti bagi kami.
 
 Wassalamu'alaikum Warahmatullahi Wabarakatuh
 
